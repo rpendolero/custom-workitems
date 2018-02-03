@@ -12,7 +12,7 @@
   	<dependency>
   		<groupId>org.drools</groupId>
   		<artifactId>drools-core</artifactId>
-  		<version>6.5.0.Final-redhat-17</version>
+  		<version>6.5.0.Final</version>
   	</dependency>
   </dependencies>
 </project>

@@ -1,5 +1,5 @@
-es\bde\aps\jbs\eaijava\Messages.class
-es\bde\aps\jbs\eaijava\plsql\Response.class
-es\bde\aps\jbs\eaijava\exception\EAIJavaException.class
-es\bde\aps\jbs\eaijava\plsql\Request.class
-es\bde\aps\jbs\eaijava\plsql\EAISQLProcedurePlugin.class
+es/bde/aps/jbs/eaijava/plsql/Request.class
+es/bde/aps/jbs/eaijava/plsql/Response.class
+es/bde/aps/jbs/eaijava/plsql/EAISQLProcedurePlugin.class
+es/bde/aps/jbs/eaijava/Messages.class
+es/bde/aps/jbs/eaijava/exception/EAIJavaException.class

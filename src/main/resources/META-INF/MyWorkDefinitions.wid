@@ -1,0 +1,32 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
+import org.drools.core.process.core.datatype.impl.type.ListDataType;
+
+
+[
+
+  [
+    "name" : "Log",
+    "parameters" : [
+      "Message" : new StringDataType()
+    ],
+    "displayName" : "Log",
+    "icon" : "defaultlogicon.gif"
+  ],
+
+
+[
+    "name" : "ProcedureTask",
+    "parameters" : [
+        "Procedure" : new StringDataType(),
+        "Input Fields" : new ListDataType(),
+        "Output Fields" : new ListDataType()
+    ],
+    "results" : [
+        "Result" : new ObjectDataType(),
+    ],
+    "displayName" : "ProcedureTask",
+    "icon" : "defaultservicenodeicon.png"
+  ]
+
+]

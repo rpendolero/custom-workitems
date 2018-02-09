@@ -18,7 +18,7 @@
         </work-item-handler>
         <work-item-handler>
             <resolver>mvel</resolver>
-            <identifier>new es.bde.aps.jbs.eaijava.plsql.ProcedureWorkItemHandler()</identifier>
+            <identifier>new es.bde.aps.jbs.eaijava.plsql.EAISQLProcedureWorkItemHandler()</identifier>
             <parameters/>
             <name>ProcedureTask</name>
         </work-item-handler>

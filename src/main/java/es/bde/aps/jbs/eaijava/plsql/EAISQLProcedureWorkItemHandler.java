@@ -42,13 +42,13 @@ public class EAISQLProcedureWorkItemHandler implements WorkItemHandler {
 			String application = workItem.getName().substring(0, 3);
 			Map<String, Object> parameters = workItem.getParameters();
 
-			List<?> listInputFields = (List<?>) parameters.get(PARAM_LIST_IN);
+			List<Object> listInputFields = (List<Object>) parameters.get(PARAM_LIST_IN);
 			if (listInputFields == null) {
 				logger.info("Lista de campos de entrada vacios");
 			} else {
 				logger.info("Lista de campos de entrada [" + listInputFields.toString() + "]");
 			}
-			List<?> listOutputFields = (List<?>) parameters.get(PARAM_LIST_OUT);
+			List<Object> listOutputFields = (List<Object>) parameters.get(PARAM_LIST_OUT);
 			if (listOutputFields == null) {
 				logger.info("Lista de campos de salida vacios");
 			} else {
@@ -64,10 +64,10 @@ public class EAISQLProcedureWorkItemHandler implements WorkItemHandler {
 			pool = ConnectionPoolFactory.getPool(application);
 
 			Connection connection = (Connection) pool.borrowObject();
+			EAISQLControlDAO controlDAO = new EAISQLControlDAO(connection);
+			Map<String, Object> results = controlDAO.executeProcedure(reference, procedure, user, listInputFields, listOutputFields);
 
 			logger.info(Messages.getString("eaijava.messageExecuteProcedureOK", new String[] { reference, procedure, application }));
-
-			Map<String, Object> results = null;
 			manager.completeWorkItem(workItem.getId(), results);
 
 		} catch (Exception e) {

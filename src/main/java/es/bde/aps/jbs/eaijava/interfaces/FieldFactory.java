@@ -7,7 +7,7 @@ public class FieldFactory {
 	}
 
 	public static IField createFieldArray(String name, String value, FieldType type) {
-		return null;
+		return new FieldArray(name, value, type);
 	}
 
 }

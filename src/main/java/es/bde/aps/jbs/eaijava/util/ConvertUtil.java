@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import es.bde.aps.jbs.eaijava.interfaces.FieldType;
 import es.bde.aps.jbs.eaijava.interfaces.IField;
 
 /**
@@ -53,20 +54,21 @@ public class ConvertUtil {
 			return null;
 
 		switch (field.getType()) {
-		case 'A':
+		case STRING:
 			// Tipo Texto
 			return field.getValue();
-		case 'D':
+		case DATE:
 			// Tipo Fecha
 			return new Date(oDateFormat.parse((String) field.getValue()).getTime());
-		case 'T':
+		case TIME:
 			// Tipo Hora
 			return new Time(oTimeFormat.parse((String) field.getValue()).getTime());
-		case 'O':
+		case DATETIME:
 			// Tipo Timestamp (float)
 			return new Timestamp(oDateTimeFormat.parse((String) field.getValue()).getTime());
-		case 'N':
-		case 'R':
+		case INTEGER:
+			return new Integer((Integer) field.getValue());
+		case DOUBLE:
 			// Tipo Numerico (float)
 			return new Double((Double) field.getValue());
 		default:
@@ -85,17 +87,18 @@ public class ConvertUtil {
 	 */
 	public static String getTypeArraySQL(IField field) {
 
-		char type = field.getType();
+		FieldType type = field.getType();
 		switch (type) {
-		case 'A':
+		case STRING:
 			return ARRAY_STRING;
-		case 'D':
+		case DATE:
+		case DATETIME:
 			return ARRAY_DATE;
-		case 'T':
+		case TIME:
 			return ARRAY_TIME;
-		case 'R':
+		case DOUBLE:
 			return ARRAY_DOUBLE;
-		case 'N':
+		case INTEGER:
 			return ARRAY_INTEGER;
 		default:
 			return ARRAY_STRING;
@@ -113,18 +116,18 @@ public class ConvertUtil {
 	 *            objeto que se realiza la conversi�n
 	 * @return
 	 */
-	public static Object getObjectSSO(char type, Object obj) {
+	public static Object getObjectSSO(FieldType type, Object obj) {
 
 		if (obj == null)
 			return "";
 
 		String value = null;
 		switch (type) {
-		case 'A':
+		case STRING:
 			// Tipo Texto
 			value = obj.toString();
 			break;
-		case 'D':
+		case DATE:
 			// Tipo Fecha
 			if (obj instanceof Timestamp) {
 				long time = ((Timestamp) obj).getTime();
@@ -139,7 +142,7 @@ public class ConvertUtil {
 			}
 
 			break;
-		case 'T':
+		case TIME:
 			// Tipo Hora
 			if (obj instanceof Timestamp) {
 				long time = ((Timestamp) obj).getTime();
@@ -154,7 +157,7 @@ public class ConvertUtil {
 			}
 
 			break;
-		case 'O':
+		case DATETIME:
 			// Tipo Timestamp
 			if (obj instanceof Timestamp) {
 				long time = ((Timestamp) obj).getTime();
@@ -168,8 +171,8 @@ public class ConvertUtil {
 				}
 			}
 			break;
-		case 'N':
-		case 'R':
+		case INTEGER:
+		case DOUBLE:
 			return oDecimalFormat.format(obj);
 		default:
 			// Tipo Texto
@@ -189,22 +192,21 @@ public class ConvertUtil {
 	 * @return
 	 * @throws ParseException
 	 */
-	public static int getTypeSQL(char type) {
+	public static int getTypeSQL(FieldType type) {
 		switch (type) {
-		case 'A':
+		case STRING:
 			// Tipo Texto
 			return Types.VARCHAR;
-		case 'D':
+		case DATE:
 			// Tipo Fecha
 			return Types.DATE;
-		case 'T':
+		case TIME:
 			// Tipo Hora
 			return Types.TIME;
-		case 'O':
+		case DATETIME:
 			// Tipo Timestamp
 			return Types.TIMESTAMP;
-		case 'N':
-		case 'R':
+		case DOUBLE:
 			// Tipo Numerico (float)
 			return Types.DOUBLE;
 		default:

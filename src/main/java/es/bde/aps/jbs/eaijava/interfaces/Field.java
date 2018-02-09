@@ -3,15 +3,18 @@ package es.bde.aps.jbs.eaijava.interfaces;
 public class Field implements IField {
 	private String name;
 	private String value;
-	private char type;
+	private FieldType type;
+
 	/**
 	 * 
+	 * @param name
+	 * @param value
+	 * @param type
 	 */
-	private boolean isArray;
-
 	public Field(String name, String value, FieldType type) {
-
-		// TODO Auto-generated constructor stub
+		this.name = name;
+		this.value = value;
+		this.type = type;
 	}
 
 	/**
@@ -31,31 +34,30 @@ public class Field implements IField {
 	/**
 	 * @return
 	 */
-	public char getType() {
+	public FieldType getType() {
 		return type;
 	}
 
 	/**
 	 * @param type
 	 */
-	public void setType(char type) {
+	public void setType(FieldType type) {
 		this.type = type;
 	}
 
+	/**
+	 * 
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * 
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public boolean isArray() {
-		return isArray;
-	}
-
-	public void setArray(boolean isArray) {
-		this.isArray = isArray;
 	}
 
 }

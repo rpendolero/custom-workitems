@@ -5,6 +5,6 @@ public interface IField {
 
 	public abstract Object getValue();
 
-	public abstract char getType();
+	public abstract FieldType getType();
 
 }

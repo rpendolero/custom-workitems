@@ -29,4 +29,16 @@ import org.drools.core.process.core.datatype.impl.type.ListDataType;
     "icon" : "defaultservicenodeicon.png"
   ]
 
+[
+    "name" : "TestWebServiceTask",
+    "parameters" : [
+        "Procedure" : new StringDataType(),
+        
+    ],
+    "results" : [
+        "Result" : new ObjectDataType(),
+    ],
+    "displayName" : "TestWebServiceTask",
+    "icon" : "defaultservicenodeicon.png"
+  ]
 ]

@@ -1,9 +1,11 @@
 package es.bde.aps.jbs.eaijava.interfaces;
 
+import java.util.List;
+
 public class FieldArray implements IField {
 	private String name;
-	private String value;
-	private FieldType type;
+	private List<Object> value;
+	private char type;
 
 	/**
 	 * 
@@ -11,23 +13,38 @@ public class FieldArray implements IField {
 	 * @param value
 	 * @param type
 	 */
-	public FieldArray(String name, String value, FieldType type) {
+	public FieldArray(String name, List<Object> value, char type) {
 		this.name = name;
 		this.value = value;
 		this.type = type;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see es.bde.aps.jbs.eaijava.interfaces.IField#getName()
+	 */
 	public String getName() {
 		// TODO Auto-generated method stub
 		return name;
 	}
 
-	public Object getValue() {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see es.bde.aps.jbs.eaijava.interfaces.IField#getValue()
+	 */
+	public List<Object> getValue() {
 		// TODO Auto-generated method stub
 		return value;
 	}
 
-	public FieldType getType() {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see es.bde.aps.jbs.eaijava.interfaces.IField#getType()
+	 */
+	public char getType() {
 		// TODO Auto-generated method stub
 		return type;
 	}

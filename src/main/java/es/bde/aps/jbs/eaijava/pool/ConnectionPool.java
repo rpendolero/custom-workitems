@@ -6,11 +6,11 @@
  */
 package es.bde.aps.jbs.eaijava.pool;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.pool.impl.GenericObjectPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,12 +26,14 @@ import oracle.jdbc.pool.OracleDataSource;
  * @author Roberto Pendolero Bonilla (infrpbx)
  * 
  */
-public class ConnectionPool extends GenericObjectPool {
+public class ConnectionPool {
 
+	private static final String WHEN_EXHAUSTED_GROW = null;
 	private Logger logger = LoggerFactory.getLogger(ConnectionPool.class);
 	private String user;
 	private String driverName;
 	private String schemaOwner;
+	private ConnectionFactory connectionFactory;
 
 	/**
 	 * Constructor
@@ -63,6 +65,36 @@ public class ConnectionPool extends GenericObjectPool {
 		ConnectionFactory connectionFactory = new ConnectionFactory(dataSource, isAutoCommit);
 
 		setFactory(connectionFactory);
+
+	}
+
+	private void setFactory(ConnectionFactory connectionFactory) {
+		this.connectionFactory = connectionFactory;
+
+	}
+
+	private void setWhenExhaustedAction(String whenExhaustedGrow) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void setMaxIdle(int int1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void setMaxActive(int int1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void setTestOnReturn(boolean b) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void setTestOnBorrow(boolean b) {
+		// TODO Auto-generated method stub
 
 	}
 
@@ -136,6 +168,27 @@ public class ConnectionPool extends GenericObjectPool {
 
 	public String getSchemaOwner() {
 		return schemaOwner;
+	}
+
+	public Connection borrowObject() {
+		// TODO Auto-generated method stub
+		try {
+			return (Connection) connectionFactory.makeObject();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void returnObject(Connection connection) {
+		try {
+			connectionFactory.destroyObject(connection);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

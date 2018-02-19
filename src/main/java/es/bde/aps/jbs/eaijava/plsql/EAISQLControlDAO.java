@@ -17,7 +17,6 @@ import es.bde.aps.jbs.eaijava.Messages;
 import es.bde.aps.jbs.eaijava.exception.EAIJavaException;
 import es.bde.aps.jbs.eaijava.interfaces.Field;
 import es.bde.aps.jbs.eaijava.interfaces.FieldArray;
-import es.bde.aps.jbs.eaijava.interfaces.FieldType;
 import es.bde.aps.jbs.eaijava.interfaces.IField;
 import es.bde.aps.jbs.eaijava.util.ConvertUtil;
 import oracle.jdbc.OracleCallableStatement;
@@ -184,7 +183,7 @@ public class EAISQLControlDAO {
 	private void setInputParameter(CallableStatement stmt, IField field, int posicion) throws ParseException, SQLException {
 		// TODO Ap�ndice de m�todo generado autom�ticamente
 		Object value = ConvertUtil.getObjectSQL(field);
-		FieldType type = field.getType();
+		char type = field.getType();
 		logger.info(Messages.getString("eaijava.messageRegisteringInputParameters", new String[] { field.getName(), String.valueOf(type), String.valueOf(posicion) }));
 		if (value == null) {
 			stmt.setNull(posicion, ConvertUtil.getTypeSQL(type));
@@ -256,7 +255,7 @@ public class EAISQLControlDAO {
 		for (int i = 0; i < outputFields.size(); i++) {
 			IField field = (IField) outputFields.get(i);
 			String nameParameter = field.getName();
-			FieldType type = field.getType();
+			char type = field.getType();
 			logger.info(Messages.getString("eaijava.messageGettingOutputParameters", new String[] { field.getName(), String.valueOf(type) }));
 			if (field instanceof FieldArray) {
 				Array arrayOracle = stmt.getArray(pos + i);
@@ -265,7 +264,7 @@ public class EAISQLControlDAO {
 					if (array == null)
 						continue;
 
-					List arrayValues = new ArrayList<String>();
+					List<String> arrayValues = new ArrayList<String>();
 					for (int k = 0; k < array.length; k++) {
 
 						String value = (String) ConvertUtil.getObjectSSO(type, array[k]);

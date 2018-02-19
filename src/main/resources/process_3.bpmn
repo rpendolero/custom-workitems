@@ -8,6 +8,9 @@
   <bpmn2:itemDefinition id="ItemDefinition_983" isCollection="false" structureRef="java.lang.Integer"/>
   <bpmn2:itemDefinition id="ItemDefinition_2" isCollection="false" structureRef="java.lang.Double"/>
   <bpmn2:itemDefinition id="ItemDefinition_4" isCollection="false" structureRef="java.util.Date"/>
+  <bpmn2:itemDefinition id="ItemDefinition_3" isCollection="false" structureRef="es.bde.aps.jbs.eaijava.interfaces.Field"/>
+  <bpmn2:itemDefinition id="ItemDefinition_6" isCollection="false" structureRef="es.bde.aps.jbs.eaijava.interfaces.FieldFactory"/>
+  <bpmn2:itemDefinition id="ItemDefinition_14" isCollection="false" structureRef="es.bde.aps.jbs.eaijava.interfaces.IField"/>
   <bpmn2:process id="process_3" drools:version="1" drools:packageName="defaultPackage" drools:adHoc="false" name="process_3" isExecutable="true">
     <bpmn2:extensionElements>
       <drools:import name="java.util.List"/>
@@ -15,6 +18,9 @@
       <drools:import name="java.lang.Integer"/>
       <drools:import name="java.lang.Double"/>
       <drools:import name="java.util.Date"/>
+      <drools:import name="es.bde.aps.jbs.eaijava.interfaces.Field"/>
+      <drools:import name="es.bde.aps.jbs.eaijava.interfaces.FieldFactory"/>
+      <drools:import name="es.bde.aps.jbs.eaijava.interfaces.IField"/>
     </bpmn2:extensionElements>
     <bpmn2:property id="listIn" itemSubjectRef="ItemDefinition_317" name="listIn"/>
     <bpmn2:property id="listOut" itemSubjectRef="ItemDefinition_317" name="listOut"/>
@@ -47,13 +53,14 @@
       <bpmn2:script>System.out.println(&quot;Script Task 1 Start&quot;);
 try{
 	listIn = new java.util.ArrayList();
-	listIn.add(&quot;paramIn&quot;);
-	listIn.add(new Integer(22));
+	Field field = (Field) FieldFactory.createField(&quot;campo1&quot;, &quot;param1&quot;,  es.bde.aps.jbs.eaijava.interfaces.IField.STRING);
+	listIn.add(field);
         kcontext.setVariable(&quot;listIn&quot;,listIn);
 
         System.out.println(listIn.toString());
 	listOut = new java.util.ArrayList();
-	listOut.add(&quot;paramOut&quot;);
+	field = (Field) FieldFactory.createField(&quot;campo2&quot;, &quot;param2&quot;,  es.bde.aps.jbs.eaijava.interfaces.IField.STRING);
+	listOut.add(field);
         kcontext.setVariable(&quot;listOut&quot;,listOut);
 
 	System.out.println(listOut.toString());
@@ -69,17 +76,7 @@ System.out.println(&quot;Script Task 1 End&quot;);
         <drools:metaData name="elementname">
           <drools:metaValue><![CDATA[ProcedureTask]]></drools:metaValue>
         </drools:metaData>
-        <drools:onEntry-script scriptFormat="http://www.java.com/java">
-          <drools:script>System.out.println(&quot;On Entry Script Start&quot;);
-try{
-
-        System.out.println(listIn.toString());
-	System.out.println(listOut.toString());
-} catch(java.lang.Exception e){
-   System.out.println(&quot;Error : &quot;+e.getMessage());
-}
-System.out.println(&quot;On Entry Script End&quot;);</drools:script>
-        </drools:onEntry-script>
+        <drools:onEntry-script scriptFormat="http://www.java.com/java"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
@@ -100,7 +97,7 @@ System.out.println(&quot;On Entry Script End&quot;);</drools:script>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_2">
         <bpmn2:targetRef>DataInput_1</bpmn2:targetRef>
         <bpmn2:assignment id="Assignment_1">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_3">MyProcedure</bpmn2:from>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_3">JBSPROCTEST</bpmn2:from>
           <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_1">DataInput_1</bpmn2:to>
         </bpmn2:assignment>
       </bpmn2:dataInputAssociation>

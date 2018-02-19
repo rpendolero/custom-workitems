@@ -1,12 +1,26 @@
 package es.bde.aps.jbs.eaijava.interfaces;
 
+import java.util.List;
+
 public class FieldFactory {
 
-	public static IField createField(String name, String value, FieldType type) {
+	/**
+	 * @param name
+	 * @param value
+	 * @param type
+	 * @return
+	 */
+	public static IField createField(String name, Object value, char type) {
 		return new Field(name, value, type);
 	}
 
-	public static IField createFieldArray(String name, String value, FieldType type) {
+	/**
+	 * @param name
+	 * @param value
+	 * @param type
+	 * @return
+	 */
+	public static IField createFieldArray(String name, List<Object> value, char type) {
 		return new FieldArray(name, value, type);
 	}
 

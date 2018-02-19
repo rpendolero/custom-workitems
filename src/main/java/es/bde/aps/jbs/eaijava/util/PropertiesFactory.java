@@ -95,7 +95,8 @@ public class PropertiesFactory {
 			throw new EAIJavaException("Variable [" + PROP_JBOSS_CONFIG_DIR + "] no definida");
 		}
 		StringBuilder fileNameConfig = new StringBuilder();
-		fileNameConfig.append(configDir).append(File.pathSeparator).append(PROPERTIES_FILE);
+		fileNameConfig.append(configDir).append(File.separatorChar).append(PROPERTIES_FILE);
+
 		properties = new Properties();
 		try {
 			Reader inStream = new BufferedReader(new FileReader(fileNameConfig.toString()));
@@ -149,13 +150,13 @@ public class PropertiesFactory {
 	 *             Si la propiedad es nula o vacia.
 	 */
 	private static String checkProperty(String propertyName) throws EAIJavaException {
-		String propertyValue = getProperty(propertyName).toString().trim();
+		String propertyValue = (String) getProperty(propertyName);
 
 		if ((propertyValue == null) || (propertyValue.length() == 0)) {
 			throw new EAIJavaException(propertyName + " es null.");
 		}
 
-		return propertyValue;
+		return propertyValue.trim();
 	}
 
 	/**

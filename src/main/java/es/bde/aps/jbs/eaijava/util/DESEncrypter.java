@@ -12,6 +12,11 @@ public class DESEncrypter {
 	private Key aesKey = null;
 	private Cipher cipher = null;
 
+	public DESEncrypter(String keyStr) throws Exception {
+		this.keyStr = keyStr;
+		init();
+	}
+
 	/**
 	 * @throws Exception
 	 */
@@ -31,7 +36,6 @@ public class DESEncrypter {
 	 * @throws Exception
 	 */
 	synchronized public String encrypt(String text) throws Exception {
-		init();
 		cipher.init(Cipher.ENCRYPT_MODE, aesKey);
 		return toHexString(cipher.doFinal(text.getBytes()));
 	}
@@ -50,7 +54,6 @@ public class DESEncrypter {
 	 * @throws Exception
 	 */
 	synchronized public String decrypt(String text) throws Exception {
-		init();
 		cipher.init(Cipher.DECRYPT_MODE, aesKey);
 		return new String(cipher.doFinal(toByteArray(text)));
 	}
@@ -61,15 +64,16 @@ public class DESEncrypter {
 	 */
 	private byte[] toByteArray(String text) {
 		// TODO Auto-generated method stub
-		return null;
+		return DatatypeConverter.parseHexBinary(text);
 	}
 
 	/**
 	 * @param seed
 	 * @return
+	 * @throws Exception
 	 */
-	public static DESEncrypter instance(String seed) {
-		// TODO Auto-generated method stub
-		return null;
+	public static DESEncrypter instance(String seed) throws Exception {
+		return new DESEncrypter(seed);
+
 	}
 }

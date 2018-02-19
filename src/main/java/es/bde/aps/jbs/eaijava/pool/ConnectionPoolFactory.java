@@ -2,7 +2,6 @@ package es.bde.aps.jbs.eaijava.pool;
 
 import java.util.Hashtable;
 
-import org.apache.commons.pool.impl.GenericObjectPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +20,7 @@ public class ConnectionPoolFactory {
 
 	private static Logger logger = LoggerFactory.getLogger(ConnectionFactory.class);
 
-	private static Hashtable<String, GenericObjectPool> hPools = new Hashtable<String, GenericObjectPool>();
+	private static Hashtable<String, ConnectionPool> hPools = new Hashtable<String, ConnectionPool>();
 
 	private static Object mutex = new Object();
 

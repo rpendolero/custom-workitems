@@ -1,9 +1,15 @@
 package es.bde.aps.jbs.eaijava.interfaces;
 
-public class Field implements IField {
+import java.io.Serializable;
+
+public class Field implements IField, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3383436822069513598L;
 	private String name;
-	private String value;
-	private FieldType type;
+	private Object value;
+	private char type;
 
 	/**
 	 * 
@@ -11,7 +17,7 @@ public class Field implements IField {
 	 * @param value
 	 * @param type
 	 */
-	public Field(String name, String value, FieldType type) {
+	public Field(String name, Object value, char type) {
 		this.name = name;
 		this.value = value;
 		this.type = type;
@@ -20,28 +26,28 @@ public class Field implements IField {
 	/**
 	 * @return
 	 */
-	public String getValue() {
+	public Object getValue() {
 		return value;
 	}
 
 	/**
 	 * @param value
 	 */
-	public void setValue(String value) {
+	public void setValue(Object value) {
 		this.value = value;
 	}
 
 	/**
 	 * @return
 	 */
-	public FieldType getType() {
+	public char getType() {
 		return type;
 	}
 
 	/**
 	 * @param type
 	 */
-	public void setType(FieldType type) {
+	public void setType(char type) {
 		this.type = type;
 	}
 

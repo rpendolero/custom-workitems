@@ -11,8 +11,6 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.pool.BasePoolableObjectFactory;
-
 import oracle.jdbc.driver.OracleConnection;
 
 /**
@@ -22,7 +20,7 @@ import oracle.jdbc.driver.OracleConnection;
  *         Ventana - Preferencias - Java - Estilo de c�digo - Plantillas de
  *         c�digo
  */
-public class ConnectionFactory extends BasePoolableObjectFactory {
+public class ConnectionFactory {
 
 	private DataSource dataSource;
 	private boolean isAutoCommit;

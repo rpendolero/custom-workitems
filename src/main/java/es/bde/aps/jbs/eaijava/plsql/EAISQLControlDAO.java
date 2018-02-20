@@ -54,7 +54,8 @@ public class EAISQLControlDAO {
 	}
 
 	/**
-	 * M�todo que invoca al procedimiento almacenado que se recibe por par�metro
+	 * M�todo que invoca al procedimiento almacenado que se recibe por
+	 * par�metro
 	 * 
 	 * @param reference
 	 * @param procedure
@@ -212,7 +213,8 @@ public class EAISQLControlDAO {
 					logger.info(Messages.getString("eaijava.messageRegisteringOutputParameters", new String[] { field.getName(), sqlType, String.valueOf(posicion) }));
 					stmt.registerOutParameter(posicion, OracleTypes.ARRAY, sqlType);
 				} else {
-					logger.info(Messages.getString("eaijava.messageRegisteringOutputParameters", new String[] { field.getName(), String.valueOf(field.getType()), String.valueOf(posicion) }));
+					logger.info(Messages.getString("eaijava.messageRegisteringOutputParameters",
+							new String[] { field.getName(), String.valueOf(field.getType()), String.valueOf(posicion) }));
 					stmt.registerOutParameter(posicion, ConvertUtil.getTypeSQL(field.getType()));
 				}
 				logger.info(Messages.getString("eaijava.messageRegisteredOutputParameters", new String[] { field.getName() }));
@@ -237,53 +239,59 @@ public class EAISQLControlDAO {
 	 * @param outputFields
 	 * @return
 	 * @throws SQLException
+	 * @throws ParseException
 	 */
-	private Map<String, Object> getParametersOut(CallableStatement stmt, List<Object> inputFields, List<Object> outputFields) throws SQLException {
+	private Map<String, Object> getParametersOut(CallableStatement stmt, List<Object> inputFields, List<Object> outputFields) throws EAIJavaException {
 		Map<String, Object> hParametersOut = new HashMap<String, Object>();
 		if (outputFields == null)
 			return hParametersOut;
 
-		int pos = 0;
-		if (inputFields.size() > 0) {
-			for (int i = 0; i < inputFields.size(); i++) {
-				Field field = (Field) inputFields.get(i);
-				pos++;
+		try {
+			int pos = 0;
+			if (inputFields.size() > 0) {
+				for (int i = 0; i < inputFields.size(); i++) {
+					Field field = (Field) inputFields.get(i);
+					pos++;
+				}
 			}
-		}
-		pos++;
-		// int pos = (inputFields == null ? 1 : inputFields.size() + 1);
-		for (int i = 0; i < outputFields.size(); i++) {
-			IField field = (IField) outputFields.get(i);
-			String nameParameter = field.getName();
-			char type = field.getType();
-			logger.info(Messages.getString("eaijava.messageGettingOutputParameters", new String[] { field.getName(), String.valueOf(type) }));
-			if (field instanceof FieldArray) {
-				Array arrayOracle = stmt.getArray(pos + i);
-				if (arrayOracle != null) {
-					Object[] array = (Object[]) arrayOracle.getArray();
-					if (array == null)
-						continue;
+			pos++;
+			// int pos = (inputFields == null ? 1 : inputFields.size() + 1);
+			for (int i = 0; i < outputFields.size(); i++) {
+				IField field = (IField) outputFields.get(i);
+				String nameParameter = field.getName();
+				char type = field.getType();
+				logger.info(Messages.getString("eaijava.messageGettingOutputParameters", new String[] { field.getName(), String.valueOf(type) }));
+				if (field instanceof FieldArray) {
+					Array arrayOracle = stmt.getArray(pos + i);
+					if (arrayOracle != null) {
+						Object[] array = (Object[]) arrayOracle.getArray();
+						if (array == null)
+							continue;
 
-					List<String> arrayValues = new ArrayList<String>();
-					for (int k = 0; k < array.length; k++) {
+						List<String> arrayValues = new ArrayList<String>();
+						for (int k = 0; k < array.length; k++) {
 
-						String value = (String) ConvertUtil.getObjectSSO(type, array[k]);
-						arrayValues.add(value);
+							String value = (String) ConvertUtil.getObjectSSO(type, array[k]);
+							arrayValues.add(value);
+
+						}
+						hParametersOut.put(nameParameter, arrayValues);
+						logger.info(Messages.getString("eaijava.messageGettedOutputParameters", new String[] { nameParameter, arrayValues.toString() }));
 
 					}
-					hParametersOut.put(nameParameter, arrayValues);
-					logger.info(Messages.getString("eaijava.messageGettedOutputParameters", new String[] { nameParameter, arrayValues.toString() }));
 
+				} else {
+					Object valueOracle = stmt.getObject(pos + i);
+					Object value = ConvertUtil.getObjectSSO(type, valueOracle);
+					logger.info(Messages.getString("eaijava.messageGettedOutputParameters", new String[] { field.getName(), String.valueOf(valueOracle) }));
+					hParametersOut.put(nameParameter, value);
 				}
-
-			} else {
-				Object valueOracle = stmt.getObject(pos + i);
-				Object value = ConvertUtil.getObjectSSO(type, valueOracle);
-				logger.info(Messages.getString("eaijava.messageGettedOutputParameters", new String[] { field.getName(), String.valueOf(valueOracle) }));
-				hParametersOut.put(nameParameter, value);
 			}
+		} catch (Exception e) {
+			throw new EAIJavaException("Error al obtener los parametros de salida [" + e.getMessage() + "]");
 		}
 		return hParametersOut;
+
 	}
 
 	/**

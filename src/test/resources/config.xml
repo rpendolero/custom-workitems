@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<tests>
+		<test name="testExecuteProcedureVoid">
+			<procedure name="JBSPROCVOID"/>
+		</test>
+		<test name="testExecuteProcedureVarcharIn">
+			<procedure name="JBSPROCVARCHARIN"/>
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="A" isArray="false">
+						<value value="valor"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureVarcharOut">
+			<procedure name="JBSPROCVARCHAROUT"/>
+			<parameters>
+				<parametersInput>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="A" isArray="false">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureVarcharInOut">
+			<procedure name="JBSPROCVARCHARINOUT"/>
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="A" isArray="false">
+						<value value="valor"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="A" isArray="false">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureIntegerIn">
+			<procedure name="JBSPROCINTEGERIN"/>
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="N" isArray="false">
+						<value value="111"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureIntegerOut">
+			<procedure name="JBSPROCINTEGEROUT"/>
+			<parameters>
+				<parametersInput>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="N" isArray="false">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureIntegerInOut">
+			<procedure name="JBSPROCINTEGERINOUT"/>
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="N" isArray="false">
+						<value value="111"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="N" isArray="false">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+		</test>		
+	</tests>
+</configuration>

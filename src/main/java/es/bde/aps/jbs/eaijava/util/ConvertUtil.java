@@ -34,14 +34,15 @@ public class ConvertUtil {
 	// Se utiliza para la conversi�n de los datos del tipo "String" a "Time"
 	private static SimpleDateFormat oTimeFormat = new SimpleDateFormat("HH:mm");
 
-	// Se utiliza para la conversi�n de los datos del tipo "String" a "DateTime"
+	// Se utiliza para la conversi�n de los datos del tipo "String" a
+	// "DateTime"
 	private static SimpleDateFormat oDateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
 	private static DecimalFormat oDecimalFormat = new DecimalFormat("#.#");
 
 	/**
-	 * M�todo que devuelve el valor de un objeto Field en el formato interpretable
-	 * en SQL.
+	 * M�todo que devuelve el valor de un objeto Field en el formato
+	 * interpretable en SQL.
 	 * 
 	 * @param field
 	 *            objeto del tipo com.staffare.eaijava.Field
@@ -66,10 +67,10 @@ public class ConvertUtil {
 			// Tipo Timestamp (float)
 			return new Timestamp(oDateTimeFormat.parse((String) field.getValue()).getTime());
 		case IField.INTEGER:
-			return new Integer((Integer) field.getValue());
+			return new Integer((String) field.getValue());
 		case IField.DOUBLE:
 			// Tipo Numerico (float)
-			return new Double((Double) field.getValue());
+			return new Double((String) field.getValue());
 		default:
 			return field.getValue();
 		}
@@ -77,8 +78,8 @@ public class ConvertUtil {
 	}
 
 	/**
-	 * M�todo que devuelve el tipo ARRAY de SQL que corresponde el tipo del campo
-	 * que se recibe por par�metro.
+	 * M�todo que devuelve el tipo ARRAY de SQL que corresponde el tipo del
+	 * campo que se recibe por par�metro.
 	 * 
 	 * @param field
 	 *            objeto del tipo com.staffare.eaijava.Field
@@ -105,17 +106,18 @@ public class ConvertUtil {
 	}
 
 	/**
-	 * M�todo que convierte el objeto gen�rico que se recibe por par�metro, teniendo
-	 * en cuenta el identificador de tipo del eaijava que tambi�n se recibe por
-	 * par�metro.
+	 * M�todo que convierte el objeto gen�rico que se recibe por
+	 * par�metro, teniendo en cuenta el identificador de tipo del eaijava que
+	 * tambi�n se recibe por par�metro.
 	 * 
 	 * @param type
 	 *            identificador del tipo (A,D,T,O,N,R)
 	 * @param obj
 	 *            objeto que se realiza la conversi�n
 	 * @return
+	 * @throws ParseException
 	 */
-	public static Object getObjectSSO(char type, Object obj) {
+	public static Object getObjectSSO(char type, Object obj) throws ParseException {
 
 		if (obj == null)
 			return "";
@@ -172,7 +174,7 @@ public class ConvertUtil {
 			break;
 		case IField.INTEGER:
 		case IField.DOUBLE:
-			return oDecimalFormat.format(obj);
+			return oDecimalFormat.parseObject(obj.toString());
 		default:
 			// Tipo Texto
 			value = obj.toString();
@@ -183,8 +185,8 @@ public class ConvertUtil {
 	}
 
 	/**
-	 * M�todo que devuelve el tipo de ORACLE al que correponde el tipo de TIBCO que
-	 * se recibe por par�metro.
+	 * M�todo que devuelve el tipo de ORACLE al que correponde el tipo de
+	 * TIBCO que se recibe por par�metro.
 	 * 
 	 * @param type
 	 *            tipo de utilizado en los EAIJava de TIBCO.

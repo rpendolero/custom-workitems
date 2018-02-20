@@ -300,19 +300,21 @@ public class EAISQLControlDAO {
 		StringBuffer strSql = new StringBuffer("{call ");
 		strSql.append(user).append(".").append(procedure.toUpperCase()).append("(");
 		int numParameters = 0;
-		if (inputFields.size() > 0) {
+		if (inputFields != null && inputFields.size() > 0) {
 			for (int i = 0; i < inputFields.size(); i++) {
 				Field field = (Field) inputFields.get(i);
 				numParameters++;
 			}
 		}
-		numParameters = numParameters + outputFields.size();
-		for (int i = 0; i < numParameters; i++) {
-			strSql.append(" ?");
-			if (i != numParameters - 1) {
-				strSql.append(", ");
-			}
+		if (outputFields != null) {
+			numParameters = numParameters + outputFields.size();
+			for (int i = 0; i < numParameters; i++) {
+				strSql.append(" ?");
+				if (i != numParameters - 1) {
+					strSql.append(", ");
+				}
 
+			}
 		}
 		strSql.append(")}");
 		logger.debug(Messages.getString("eaijava.messageSqlGenerated", new String[] { String.valueOf(strSql) }));

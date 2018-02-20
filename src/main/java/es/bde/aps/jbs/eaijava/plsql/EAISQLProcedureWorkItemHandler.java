@@ -1,6 +1,7 @@
 package es.bde.aps.jbs.eaijava.plsql;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.kie.api.runtime.process.WorkItemManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.bde.aps.jbs.eaijava.EAIConstants;
 import es.bde.aps.jbs.eaijava.Messages;
 import es.bde.aps.jbs.eaijava.pool.ConnectionPool;
 import es.bde.aps.jbs.eaijava.pool.ConnectionPoolFactory;
@@ -22,9 +24,6 @@ import es.bde.aps.jbs.eaijava.util.PropertiesFactory;
  *
  */
 public class EAISQLProcedureWorkItemHandler implements WorkItemHandler {
-	private static final String PARAM_PROCEDURE = "Procedure";
-	private static final Object PARAM_LIST_IN = "Input Fields";
-	private static final Object PARAM_LIST_OUT = "Output Fields";
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private ConnectionPool pool;
@@ -53,26 +52,29 @@ public class EAISQLProcedureWorkItemHandler implements WorkItemHandler {
 		String reference = String.valueOf(workItem.getProcessInstanceId());
 		logger.info(Messages.getString("eaijava.messageExecute", new String[] { reference }));
 		try {
-			String procedure = (String) workItem.getParameter(PARAM_PROCEDURE);
+			String procedure = (String) workItem.getParameter(EAIConstants.PARAM_PROCEDURE);
 			String application = procedure.substring(0, 3).toLowerCase();
 			Map<String, Object> parameters = workItem.getParameters();
 
 			@SuppressWarnings("unchecked")
-			List<Object> listInputFields = (List<Object>) parameters.get(PARAM_LIST_IN);
+			List<Object> listInputFields = (List<Object>) parameters.get(EAIConstants.PARAM_LIST_IN);
 			if (listInputFields == null) {
+				listInputFields = new ArrayList<Object>();
 				logger.info("Lista de campos de entrada vacios");
 			} else {
+
 				logger.info("Lista de campos de entrada [" + listInputFields.toString() + "]");
 			}
 			@SuppressWarnings("unchecked")
-			List<Object> listOutputFields = (List<Object>) parameters.get(PARAM_LIST_OUT);
+			List<Object> listOutputFields = (List<Object>) parameters.get(EAIConstants.PARAM_LIST_OUT);
 			if (listOutputFields == null) {
+				listOutputFields = new ArrayList<Object>();
 				logger.info("Lista de campos de salida vacios");
 			} else {
+
 				logger.info("Lista de campos de salida [" + listOutputFields.toString() + "]");
 			}
 
-			checkClassLoader();
 			// Se busca la propiedad que define el usuario de la base de datos
 
 			String keyProperty = application + PropertiesFactory.SCHEMA_OWNER;

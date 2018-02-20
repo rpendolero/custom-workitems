@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.pool.impl.GenericObjectPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,9 +27,8 @@ import oracle.jdbc.pool.OracleDataSource;
  * @author Roberto Pendolero Bonilla (infrpbx)
  * 
  */
-public class ConnectionPool {
+public class ConnectionPool extends GenericObjectPool {
 
-	private static final String WHEN_EXHAUSTED_GROW = null;
 	private Logger logger = LoggerFactory.getLogger(ConnectionPool.class);
 	private String user;
 	private String driverName;
@@ -62,39 +62,9 @@ public class ConnectionPool {
 		// Se crea la factoria encargada para crear las conexiones a
 		// base de datos.
 		DataSource dataSource = createDataSource(namePool);
-		ConnectionFactory connectionFactory = new ConnectionFactory(dataSource, isAutoCommit);
+		connectionFactory = new ConnectionFactory(dataSource, isAutoCommit);
 
-		setFactory(connectionFactory);
-
-	}
-
-	private void setFactory(ConnectionFactory connectionFactory) {
-		this.connectionFactory = connectionFactory;
-
-	}
-
-	private void setWhenExhaustedAction(String whenExhaustedGrow) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void setMaxIdle(int int1) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void setMaxActive(int int1) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void setTestOnReturn(boolean b) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void setTestOnBorrow(boolean b) {
-		// TODO Auto-generated method stub
+		// setFactory(connectionFactory);
 
 	}
 

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Properties;
 
+import es.bde.aps.jbs.eaijava.EAIConstants;
 import es.bde.aps.jbs.eaijava.exception.EAIJavaException;
 
 /**
@@ -47,8 +48,6 @@ public class PropertiesFactory {
 
 	// Nombre del driver de Oracle
 	public static final String DRIVER_ORACLE = "oracle.jdbc.driver.OracleDriver";
-
-	private static final String PROP_JBOSS_CONFIG_DIR = "jboss.server.config.dir";
 
 	// Referencia del objeto de propiedades
 	private static Properties properties;
@@ -90,9 +89,9 @@ public class PropertiesFactory {
 	 * 
 	 */
 	private static void loadProperties() throws EAIJavaException {
-		String configDir = System.getProperty(PROP_JBOSS_CONFIG_DIR);
+		String configDir = System.getProperty(EAIConstants.PROP_JBOSS_CONFIG_DIR);
 		if (configDir == null) {
-			throw new EAIJavaException("Variable [" + PROP_JBOSS_CONFIG_DIR + "] no definida");
+			throw new EAIJavaException("Variable [" + EAIConstants.PROP_JBOSS_CONFIG_DIR + "] no definida");
 		}
 		StringBuilder fileNameConfig = new StringBuilder();
 		fileNameConfig.append(configDir).append(File.separatorChar).append(PROPERTIES_FILE);

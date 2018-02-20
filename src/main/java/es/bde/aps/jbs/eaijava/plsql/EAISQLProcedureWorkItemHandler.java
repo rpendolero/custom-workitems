@@ -32,8 +32,8 @@ public class EAISQLProcedureWorkItemHandler implements WorkItemHandler {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.kie.api.runtime.process.WorkItemHandler#abortWorkItem(org.kie.api.runtime
-	 * .process.WorkItem, org.kie.api.runtime.process.WorkItemManager)
+	 * org.kie.api.runtime.process.WorkItemHandler#abortWorkItem(org.kie.api.
+	 * runtime .process.WorkItem, org.kie.api.runtime.process.WorkItemManager)
 	 */
 	public void abortWorkItem(WorkItem workItem, WorkItemManager manager) {
 		long id = workItem.getId();
@@ -43,7 +43,8 @@ public class EAISQLProcedureWorkItemHandler implements WorkItemHandler {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.kie.api.runtime.process.WorkItemHandler#executeWorkItem(org.kie.api.
+	 * @see
+	 * org.kie.api.runtime.process.WorkItemHandler#executeWorkItem(org.kie.api.
 	 * runtime.process.WorkItem, org.kie.api.runtime.process.WorkItemManager)
 	 */
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
@@ -93,7 +94,7 @@ public class EAISQLProcedureWorkItemHandler implements WorkItemHandler {
 
 		} catch (Exception e) {
 			logger.error(Messages.getString("eaijava.errorExecute", new String[] { reference, e.getMessage() }));
-
+			abortWorkItem(workItem, manager);
 		} finally {
 			if (pool != null) {
 				if (connection != null)

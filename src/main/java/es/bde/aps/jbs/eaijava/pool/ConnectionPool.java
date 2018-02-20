@@ -140,23 +140,20 @@ public class ConnectionPool extends GenericObjectPool {
 		return schemaOwner;
 	}
 
-	public Connection borrowObject() {
+	public Connection borrowObject() throws EAIJavaException {
 		// TODO Auto-generated method stub
 		try {
 			return (Connection) connectionFactory.makeObject();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new EAIJavaException("Error al obtener una conexion a la base de datos [" + e.getMessage() + "]");
 		}
-		return null;
 	}
 
-	public void returnObject(Connection connection) {
+	public void returnObject(Connection connection) throws EAIJavaException {
 		try {
 			connectionFactory.destroyObject(connection);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new EAIJavaException("Error al devolver una conexion a la base de datos [" + e.getMessage() + "]");
 		}
 
 	}

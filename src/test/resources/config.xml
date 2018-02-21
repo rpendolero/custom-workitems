@@ -78,5 +78,81 @@
 				</parametersOutput>
 			</parameters>
 		</test>		
+		<test name="testExecuteProcedureDoubleIn">
+			<procedure name="JBSPROCDOUBLEIN"/>
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="R" isArray="false">
+						<value value="111.11"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureDoubleOut">
+			<procedure name="JBSPROCDOUBLEOUT"/>
+			<parameters>
+				<parametersInput>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="R" isArray="false">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureDoubleInOut">	
+			<procedure name="JBSPROCDOUBLEINOUT"/>
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="R" isArray="false">
+						<value value="111.11"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="R" isArray="false">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+		</test>	
+		
+
+		<test name="testExecuteProcedureDateIn">
+			<procedure name="JBSPROCDATEIN"/>
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="D" isArray="false">
+						<value value="14/12/2010"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureDateOut">
+			<procedure name="JBSPROCDATEOUT"/>
+			<parameters>
+				<parametersInput>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="D" isArray="false">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureDateInOut">	
+			<procedure name="JBSPROCDATEINOUT"/>
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="D" isArray="false">
+						<value value="14/12/2010"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="D" isArray="false">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+		</test>									
 	</tests>
 </configuration>

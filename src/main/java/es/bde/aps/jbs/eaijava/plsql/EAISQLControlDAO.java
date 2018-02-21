@@ -271,7 +271,7 @@ public class EAISQLControlDAO {
 						List<String> arrayValues = new ArrayList<String>();
 						for (int k = 0; k < array.length; k++) {
 
-							String value = (String) ConvertUtil.getObjectSSO(type, array[k]);
+							String value = (String) ConvertUtil.getObjectJava(type, array[k]);
 							arrayValues.add(value);
 
 						}
@@ -282,7 +282,7 @@ public class EAISQLControlDAO {
 
 				} else {
 					Object valueOracle = stmt.getObject(pos + i);
-					Object value = ConvertUtil.getObjectSSO(type, valueOracle);
+					Object value = ConvertUtil.getObjectJava(type, valueOracle);
 					logger.info(Messages.getString("eaijava.messageGettedOutputParameters", new String[] { field.getName(), String.valueOf(valueOracle) }));
 					hParametersOut.put(nameParameter, value);
 				}

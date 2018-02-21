@@ -1,5 +1,6 @@
 package es.bde.aps.jbs.eaijava.util;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -117,7 +118,7 @@ public class ConvertUtil {
 	 * @return
 	 * @throws ParseException
 	 */
-	public static Object getObjectSSO(char type, Object obj) throws ParseException {
+	public static Object getObjectJava(char type, Object obj) throws ParseException {
 
 		if (obj == null)
 			return "";
@@ -173,8 +174,9 @@ public class ConvertUtil {
 			}
 			break;
 		case IField.INTEGER:
+			return new Integer(((BigDecimal) obj).intValue());
 		case IField.DOUBLE:
-			return oDecimalFormat.parseObject(obj.toString());
+			return new Double(((BigDecimal) obj).doubleValue());
 		default:
 			// Tipo Texto
 			value = obj.toString();
@@ -207,9 +209,12 @@ public class ConvertUtil {
 		case IField.DATETIME:
 			// Tipo Timestamp
 			return Types.TIMESTAMP;
+		case IField.INTEGER:
+			// Tipo Numerico
+			return Types.NUMERIC;
 		case IField.DOUBLE:
 			// Tipo Numerico (float)
-			return Types.DOUBLE;
+			return Types.DECIMAL;
 		default:
 			// Tipo Texto
 			return Types.VARCHAR;

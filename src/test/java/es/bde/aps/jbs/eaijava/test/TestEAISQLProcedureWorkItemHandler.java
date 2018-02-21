@@ -16,10 +16,6 @@ import es.bde.aps.jbs.eaijava.test.config.Configuration;
 
 public class TestEAISQLProcedureWorkItemHandler {
 
-	private static final Object PROCEDURE_VOID = "JBSPROCVOID";
-	private static final Object PROCEDURE_VARCHAR_IN = "JBSPROCVARCHARIN";
-	private static final Object PROCEDURE_VARCHAR_OUT = "JBSPROCVARCHAROUT";
-	private static final Object PROCEDURE_VARCHAR_IN_OUT = "JBSPROCVARCHARINOUT";
 	private Configuration configuration;
 	private long id;
 
@@ -165,6 +161,70 @@ public class TestEAISQLProcedureWorkItemHandler {
 		} else {
 			Assert.assertTrue(false);
 		}
+
+	}
+
+	@Test
+	public void testExecuteProcedureDoubleIn() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDoubleIn");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		Assert.assertTrue(result != null);
+
+	}
+
+	@Test
+	public void testExecuteProcedureDoubleOut() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDoubleOut");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		Assert.assertTrue(result != null);
+	}
+
+	@Test
+	public void testExecuteProcedureDoubleInOut() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDoubleInOut");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		if (result != null) {
+			// IField fieldInput = null;
+			// String valueInput = (String) fieldInput.getValue();
+			// IField fieldOutput = null;
+			// String valueOutput = (String) result.get(fieldOutput.getName());
+
+			// Assert.assertTrue(valueInput.equals(valueOutput));
+		} else {
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test
+	public void testExecuteProcedureDateIn() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateIn");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		Assert.assertTrue(result != null);
 
 	}
 }

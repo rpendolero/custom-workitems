@@ -31,7 +31,9 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 		List<IField> parametersInput = configTest.getParametersInput();
 		List<IField> parametersOuput = configTest.getParametersOutput();
-		workItem.setId(id++);
+		id = id + 1;
+		workItem.setId(id);
+		workItem.setProcessInstanceId(id);
 		workItem.setParameter(EAIConstants.PARAM_LIST_IN, parametersInput);
 		workItem.setParameter(EAIConstants.PARAM_LIST_OUT, parametersOuput);
 
@@ -40,12 +42,12 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	@Before
 	public void setUp() {
-		String workspaceLocation = "c:/trabajo/git";
+		String workspaceLocation = "/home/roberto/developer/git";
 		System.setProperty(EAIConstants.PROP_JBOSS_CONFIG_DIR, workspaceLocation + "/eaijava/src/test/resources");
 		try {
 			configuration = Configuration.getInstance();
 		} catch (Exception e) {
-			String message = "Error al cargar la configuración [" + e.getMessage() + "]";
+			String message = "Error al cargar la configuraciï¿½n [" + e.getMessage() + "]";
 			Assert.assertNotNull(message, null);
 		}
 	}
@@ -225,6 +227,42 @@ public class TestEAISQLProcedureWorkItemHandler {
 		long id = workItem.getId();
 		Map<String, Object> result = manager.getResult(id);
 		Assert.assertTrue(result != null);
+
+	}
+
+	@Test
+	public void testExecuteProcedureDateOut() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateOut");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		Assert.assertTrue(result != null);
+	}
+
+	@Test
+	public void testExecuteProcedureDateInOut() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateInOut");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		if (result != null) {
+			// IField fieldInput = null;
+			// String valueInput = (String) fieldInput.getValue();
+			// IField fieldOutput = null;
+			// String valueOutput = (String) result.get(fieldOutput.getName());
+
+			// Assert.assertTrue(valueInput.equals(valueOutput));
+		} else {
+			Assert.assertTrue(false);
+		}
 
 	}
 }

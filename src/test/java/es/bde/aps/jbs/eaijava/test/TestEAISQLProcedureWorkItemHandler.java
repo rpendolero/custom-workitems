@@ -42,8 +42,9 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	@Before
 	public void setUp() {
-		String workspaceLocation = "/home/roberto/developer/git";
-		System.setProperty(EAIConstants.PROP_JBOSS_CONFIG_DIR, workspaceLocation + "/eaijava/src/test/resources");
+
+		String directory = System.getProperty("user.dir");
+		System.setProperty(EAIConstants.PROP_JBOSS_CONFIG_DIR, directory + "/src/test/resources");
 		try {
 			configuration = Configuration.getInstance();
 		} catch (Exception e) {
@@ -247,6 +248,106 @@ public class TestEAISQLProcedureWorkItemHandler {
 	public void testExecuteProcedureDateInOut() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateInOut");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		if (result != null) {
+			// IField fieldInput = null;
+			// String valueInput = (String) fieldInput.getValue();
+			// IField fieldOutput = null;
+			// String valueOutput = (String) result.get(fieldOutput.getName());
+
+			// Assert.assertTrue(valueInput.equals(valueOutput));
+		} else {
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test
+	public void testExecuteProcedureDateTimeIn() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateTimeIn");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		Assert.assertTrue(result != null);
+
+	}
+
+	@Test
+	public void testExecuteProcedureDateTimeOut() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateTimeOut");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		Assert.assertTrue(result != null);
+	}
+
+	@Test
+	public void testExecuteProcedureDateTimeInOut() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateTimeInOut");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		if (result != null) {
+			// IField fieldInput = null;
+			// String valueInput = (String) fieldInput.getValue();
+			// IField fieldOutput = null;
+			// String valueOutput = (String) result.get(fieldOutput.getName());
+
+			// Assert.assertTrue(valueInput.equals(valueOutput));
+		} else {
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test
+	public void testExecuteProcedureTimeIn() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureTimeIn");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		Assert.assertTrue(result != null);
+
+	}
+
+	@Test
+	public void testExecuteProcedureTimeOut() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureTimeOut");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		Assert.assertTrue(result != null);
+	}
+
+	@Test
+	public void testExecuteProcedureTimeInOut() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureTimeInOut");
 
 		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
 		workItemHandler.executeWorkItem(workItem, manager);

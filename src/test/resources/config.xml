@@ -115,8 +115,6 @@
 				</parametersOutput>
 			</parameters>
 		</test>	
-		
-
 		<test name="testExecuteProcedureDateIn">
 			<procedure name="JBSPROCDATEIN"/>
 			<parameters>
@@ -153,6 +151,81 @@
 					</parameter>
 				</parametersOutput>
 			</parameters>
+		</test>
+		<test name="testExecuteProcedureDateTimeIn">
+			<procedure name="JBSPROCDATEIN"/>
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="O" isArray="false">
+						<value value="14/12/2010 12:25"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureDateTimeOut">
+			<procedure name="JBSPROCDATEOUT"/>
+			<parameters>
+				<parametersInput>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="O" isArray="false">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureDateTimeInOut">	
+			<procedure name="JBSPROCDATEINOUT"/>
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="O" isArray="false">
+						<value value="14/12/2010 12:25"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="O" isArray="false">
+					</parameter>
+				</parametersOutput>
+			</parameters>
 		</test>									
+
+		<test name="testExecuteProcedureTimeIn">
+			<procedure name="JBSPROCDATEIN"/>
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="T" isArray="false">
+						<value value="12:25"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureTimeOut">
+			<procedure name="JBSPROCDATEOUT"/>
+			<parameters>
+				<parametersInput>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="T" isArray="false">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureTimeInOut">	
+			<procedure name="JBSPROCDATEINOUT"/>
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="T" isArray="false">
+						<value value="12:25"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="T" isArray="false">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+		</test>																
 	</tests>
 </configuration>

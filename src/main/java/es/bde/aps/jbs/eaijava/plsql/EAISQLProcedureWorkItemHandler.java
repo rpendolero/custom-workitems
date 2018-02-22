@@ -82,7 +82,7 @@ public class EAISQLProcedureWorkItemHandler implements WorkItemHandler {
 			String user = PropertiesFactory.getString(keyProperty);
 			logger.info("Creando conexion para el usuario [" + user + "] en la aplicacion [" + application + "]");
 
-			// Se obtiene el pool y una conexi�n a la base de datos
+			// Se obtiene el pool y una conexion a la base de datos
 			pool = ConnectionPoolFactory.getPool(application);
 
 			connection = (Connection) pool.borrowObject();

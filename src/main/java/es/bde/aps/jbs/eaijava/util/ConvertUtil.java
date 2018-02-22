@@ -1,6 +1,8 @@
 package es.bde.aps.jbs.eaijava.util;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Array;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -8,6 +10,8 @@ import java.sql.Types;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import es.bde.aps.jbs.eaijava.interfaces.IField;
 
@@ -28,6 +32,8 @@ public class ConvertUtil {
 	public static final String ARRAY_DATE = "DATEARRAY";
 
 	public static final String ARRAY_TIME = "TIMEARRAY";
+
+	public static final String ARRAY_DATETIME = "DATETIMEARRAY";
 
 	// Se utiliza para la conversi�n de los datos del tipo "String" a "Date"
 	private static SimpleDateFormat oDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -54,27 +60,7 @@ public class ConvertUtil {
 		if (field == null || field.getValue() == null || "".equals(field.getValue()))
 			return null;
 
-		switch (field.getType()) {
-		case IField.STRING:
-			// Tipo Texto
-			return field.getValue();
-		case IField.DATE:
-			// Tipo Fecha
-			return new Date(oDateFormat.parse((String) field.getValue()).getTime());
-		case IField.TIME:
-			// Tipo Hora
-			return new Time(oTimeFormat.parse((String) field.getValue()).getTime());
-		case IField.DATETIME:
-			// Tipo Timestamp (float)
-			return new Timestamp(oDateTimeFormat.parse((String) field.getValue()).getTime());
-		case IField.INTEGER:
-			return new Integer((String) field.getValue());
-		case IField.DOUBLE:
-			// Tipo Numerico (float)
-			return new Double((String) field.getValue());
-		default:
-			return field.getValue();
-		}
+		return getObjectSQL(field.getType(), field.getValue());
 
 	}
 
@@ -93,8 +79,9 @@ public class ConvertUtil {
 		case IField.STRING:
 			return ARRAY_STRING;
 		case IField.DATE:
-		case IField.DATETIME:
 			return ARRAY_DATE;
+		case IField.DATETIME:
+			return ARRAY_DATETIME;
 		case IField.TIME:
 			return ARRAY_TIME;
 		case IField.DOUBLE:
@@ -118,7 +105,7 @@ public class ConvertUtil {
 	 * @return
 	 * @throws ParseException
 	 */
-	public static Object getObjectJava(char type, Object obj) throws ParseException {
+	public static Object getObjectJava(char type, Serializable obj) throws ParseException {
 
 		if (obj == null)
 			return "";
@@ -154,7 +141,12 @@ public class ConvertUtil {
 					value = oTimeFormat.format((Date) obj);
 
 				} else {
-					value = obj.toString();
+					if (obj instanceof Time) {
+						long time = ((Time) obj).getTime();
+						value = oTimeFormat.format(new java.util.Date(time));
+					} else {
+						value = obj.toString();
+					}
 				}
 			}
 
@@ -220,6 +212,76 @@ public class ConvertUtil {
 			return Types.VARCHAR;
 		}
 
+	}
+
+	/**
+	 * 
+	 * @param type
+	 * @param arrayOracle
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Object> getObjectJava(char type, Array arrayOracle) throws Exception {
+		List<Object> listValues = new ArrayList<Object>();
+		if (arrayOracle != null) {
+			Object[] array = (Object[]) arrayOracle.getArray();
+			if (array == null)
+				return listValues;
+
+			for (int k = 0; k < array.length; k++) {
+				Object value = getObjectJava(type, (Serializable) array[k]);
+				listValues.add(value);
+			}
+
+		}
+		return listValues;
+	}
+
+	/**
+	 * 
+	 * @param valoresArray
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Object[] getObjectSQL(char type, List<Object> valoresArray) throws ParseException {
+		Object[] valores = new Object[valoresArray.size()];
+		int i = 0;
+		for (Object valor : valoresArray) {
+			valores[i] = getObjectSQL(type, valor);
+			i++;
+		}
+		return valores;
+	}
+
+	/**
+	 * 
+	 * @param type
+	 * @param valor
+	 * @return
+	 * @throws ParseException
+	 */
+	private static Object getObjectSQL(char type, Object valor) throws ParseException {
+		switch (type) {
+		case IField.STRING:
+			// Tipo Texto
+			return valor;
+		case IField.DATE:
+			// Tipo Fecha
+			return new Date(oDateFormat.parse((String) valor).getTime());
+		case IField.TIME:
+			// Tipo Hora
+			return new Time(oTimeFormat.parse((String) valor).getTime());
+		case IField.DATETIME:
+			// Tipo Timestamp (float)
+			return new Timestamp(oDateTimeFormat.parse((String) valor).getTime());
+		case IField.INTEGER:
+			return new Integer((String) valor);
+		case IField.DOUBLE:
+			// Tipo Numerico (float)
+			return new Double((String) valor);
+		default:
+			return valor;
+		}
 	}
 
 }

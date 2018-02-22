@@ -55,11 +55,16 @@ public class FieldArray implements IField {
 	 * @param value
 	 */
 	public void addValue(Object value) {
-		if (value == null) {
+		if (values == null) {
 			values = new ArrayList<Object>();
 		}
 		values.add(value);
 
+	}
+
+	@Override
+	public String toString() {
+		return "FieldArray [name=" + name + ", values=" + values + ", type=" + type + "]";
 	}
 
 }

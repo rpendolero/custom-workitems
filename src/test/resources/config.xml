@@ -2,10 +2,11 @@
 <configuration>
 	<tests>
 		<test name="testExecuteProcedureVoid">
-			<procedure name="JBSPROCVOID"/>
+			<procedure name="JBSPROCVOID" />
 		</test>
+		<!-- Test Varchar -->
 		<test name="testExecuteProcedureVarcharIn">
-			<procedure name="JBSPROCVARCHARIN"/>
+			<procedure name="JBSPROCVARCHARIN" />
 			<parameters>
 				<parametersInput>
 					<parameter name="paramIn" type="A" isArray="false">
@@ -17,7 +18,7 @@
 			</parameters>
 		</test>
 		<test name="testExecuteProcedureVarcharOut">
-			<procedure name="JBSPROCVARCHAROUT"/>
+			<procedure name="JBSPROCVARCHAROUT" />
 			<parameters>
 				<parametersInput>
 				</parametersInput>
@@ -26,9 +27,12 @@
 					</parameter>
 				</parametersOutput>
 			</parameters>
+			<result>
+				<value value="valor1"></value>
+			</result>
 		</test>
 		<test name="testExecuteProcedureVarcharInOut">
-			<procedure name="JBSPROCVARCHARINOUT"/>
+			<procedure name="JBSPROCVARCHARINOUT" />
 			<parameters>
 				<parametersInput>
 					<parameter name="paramIn" type="A" isArray="false">
@@ -40,9 +44,13 @@
 					</parameter>
 				</parametersOutput>
 			</parameters>
+			<result>
+				<value value="valor"></value>
+			</result>
 		</test>
+		<!-- Test Integer -->
 		<test name="testExecuteProcedureIntegerIn">
-			<procedure name="JBSPROCINTEGERIN"/>
+			<procedure name="JBSPROCINTEGERIN" />
 			<parameters>
 				<parametersInput>
 					<parameter name="paramIn" type="N" isArray="false">
@@ -54,7 +62,7 @@
 			</parameters>
 		</test>
 		<test name="testExecuteProcedureIntegerOut">
-			<procedure name="JBSPROCINTEGEROUT"/>
+			<procedure name="JBSPROCINTEGEROUT" />
 			<parameters>
 				<parametersInput>
 				</parametersInput>
@@ -63,9 +71,12 @@
 					</parameter>
 				</parametersOutput>
 			</parameters>
+			<result>
+				<value value="222"></value>
+			</result>
 		</test>
 		<test name="testExecuteProcedureIntegerInOut">
-			<procedure name="JBSPROCINTEGERINOUT"/>
+			<procedure name="JBSPROCINTEGERINOUT" />
 			<parameters>
 				<parametersInput>
 					<parameter name="paramIn" type="N" isArray="false">
@@ -77,9 +88,13 @@
 					</parameter>
 				</parametersOutput>
 			</parameters>
-		</test>		
+			<result>
+				<value value="222"></value>
+			</result>
+		</test>
+		<!-- Test Double -->
 		<test name="testExecuteProcedureDoubleIn">
-			<procedure name="JBSPROCDOUBLEIN"/>
+			<procedure name="JBSPROCDOUBLEIN" />
 			<parameters>
 				<parametersInput>
 					<parameter name="paramIn" type="R" isArray="false">
@@ -91,7 +106,7 @@
 			</parameters>
 		</test>
 		<test name="testExecuteProcedureDoubleOut">
-			<procedure name="JBSPROCDOUBLEOUT"/>
+			<procedure name="JBSPROCDOUBLEOUT" />
 			<parameters>
 				<parametersInput>
 				</parametersInput>
@@ -100,9 +115,12 @@
 					</parameter>
 				</parametersOutput>
 			</parameters>
+			<result>
+				<value value="222.22"></value>
+			</result>
 		</test>
-		<test name="testExecuteProcedureDoubleInOut">	
-			<procedure name="JBSPROCDOUBLEINOUT"/>
+		<test name="testExecuteProcedureDoubleInOut">
+			<procedure name="JBSPROCDOUBLEINOUT" />
 			<parameters>
 				<parametersInput>
 					<parameter name="paramIn" type="R" isArray="false">
@@ -114,9 +132,13 @@
 					</parameter>
 				</parametersOutput>
 			</parameters>
-		</test>	
+			<result>
+				<value value="222.22"></value>
+			</result>
+		</test>
+		<!-- Test Date -->
 		<test name="testExecuteProcedureDateIn">
-			<procedure name="JBSPROCDATEIN"/>
+			<procedure name="JBSPROCDATEIN" />
 			<parameters>
 				<parametersInput>
 					<parameter name="paramIn" type="D" isArray="false">
@@ -128,7 +150,7 @@
 			</parameters>
 		</test>
 		<test name="testExecuteProcedureDateOut">
-			<procedure name="JBSPROCDATEOUT"/>
+			<procedure name="JBSPROCDATEOUT" />
 			<parameters>
 				<parametersInput>
 				</parametersInput>
@@ -137,9 +159,12 @@
 					</parameter>
 				</parametersOutput>
 			</parameters>
+			<result>
+				<value value="14/12/2010"></value>
+			</result>
 		</test>
-		<test name="testExecuteProcedureDateInOut">	
-			<procedure name="JBSPROCDATEINOUT"/>
+		<test name="testExecuteProcedureDateInOut">
+			<procedure name="JBSPROCDATEINOUT" />
 			<parameters>
 				<parametersInput>
 					<parameter name="paramIn" type="D" isArray="false">
@@ -151,9 +176,13 @@
 					</parameter>
 				</parametersOutput>
 			</parameters>
+			<result>
+				<value value="14/12/2010"></value>
+			</result>
 		</test>
+		<!-- Test DateTime -->
 		<test name="testExecuteProcedureDateTimeIn">
-			<procedure name="JBSPROCDATEIN"/>
+			<procedure name="JBSPROCDATEIN" />
 			<parameters>
 				<parametersInput>
 					<parameter name="paramIn" type="O" isArray="false">
@@ -163,9 +192,12 @@
 				<parametersOutput>
 				</parametersOutput>
 			</parameters>
+			<result>
+				<value value="valor"></value>
+			</result>
 		</test>
 		<test name="testExecuteProcedureDateTimeOut">
-			<procedure name="JBSPROCDATEOUT"/>
+			<procedure name="JBSPROCDATEOUT" />
 			<parameters>
 				<parametersInput>
 				</parametersInput>
@@ -174,9 +206,12 @@
 					</parameter>
 				</parametersOutput>
 			</parameters>
+			<result>
+				<value value="14/12/2010 12:25"></value>
+			</result>
 		</test>
-		<test name="testExecuteProcedureDateTimeInOut">	
-			<procedure name="JBSPROCDATEINOUT"/>
+		<test name="testExecuteProcedureDateTimeInOut">
+			<procedure name="JBSPROCDATEINOUT" />
 			<parameters>
 				<parametersInput>
 					<parameter name="paramIn" type="O" isArray="false">
@@ -188,10 +223,13 @@
 					</parameter>
 				</parametersOutput>
 			</parameters>
-		</test>									
-
+			<result>
+				<value value="14/12/2010 12:25"></value>
+			</result>
+		</test>
+		<!-- Test Time -->
 		<test name="testExecuteProcedureTimeIn">
-			<procedure name="JBSPROCDATEIN"/>
+			<procedure name="JBSPROCDATEIN" />
 			<parameters>
 				<parametersInput>
 					<parameter name="paramIn" type="T" isArray="false">
@@ -203,7 +241,7 @@
 			</parameters>
 		</test>
 		<test name="testExecuteProcedureTimeOut">
-			<procedure name="JBSPROCDATEOUT"/>
+			<procedure name="JBSPROCDATEOUT" />
 			<parameters>
 				<parametersInput>
 				</parametersInput>
@@ -212,9 +250,12 @@
 					</parameter>
 				</parametersOutput>
 			</parameters>
+			<result>
+				<value value="12:25"></value>
+			</result>
 		</test>
-		<test name="testExecuteProcedureTimeInOut">	
-			<procedure name="JBSPROCDATEINOUT"/>
+		<test name="testExecuteProcedureTimeInOut">
+			<procedure name="JBSPROCDATEINOUT" />
 			<parameters>
 				<parametersInput>
 					<parameter name="paramIn" type="T" isArray="false">
@@ -226,6 +267,331 @@
 					</parameter>
 				</parametersOutput>
 			</parameters>
-		</test>																
+			<result>
+				<value value="12:25"></value>
+			</result>
+		</test>
+		<!-- Test ArrayVarchar -->
+		<test name="testExecuteProcedureArrayVarcharIn">
+			<procedure name="JBSPROCVARCHARARRAYIN" />
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="A" isArray="true">
+						<value value="valor1"></value>
+						<value value="valor2"></value>
+						<value value="valor3"></value>
+						<value value="valor4"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureArrayVarcharOut">
+			<procedure name="JBSPROCVARCHARARRAYOUT" />
+			<parameters>
+				<parametersInput>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="A" isArray="true">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+			<result>
+				<value value="valor1"></value>
+				<value value="valor2"></value>
+			</result>
+		</test>
+		<test name="testExecuteProcedureArrayVarcharInOut">
+			<procedure name="JBSPROCVARCHARARRAYINOUT" />
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="A" isArray="true">
+						<value value="valor1"></value>
+						<value value="valor2"></value>
+						<value value="valor3"></value>
+						<value value="valor4"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="A" isArray="true">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+			<result>
+				<value value="valor1"></value>
+				<value value="valor2"></value>
+			</result>
+		</test>
+		<!-- Test ArrayInteger -->
+		<test name="testExecuteProcedureArrayIntegerIn">
+			<procedure name="JBSPROCINTEGERARRAYIN" />
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="N" isArray="true">
+						<value value="1111"></value>
+						<value value="2222"></value>
+						<value value="3333"></value>
+						<value value="4444"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureArrayIntegerOut">
+			<procedure name="JBSPROCINTEGERARRAYOUT" />
+			<parameters>
+				<parametersInput>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="N" isArray="true">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+			<result>
+				<value value="111"></value>
+				<value value="222"></value>
+				<value value="333"></value>
+			</result>
+		</test>
+		<test name="testExecuteProcedureArrayIntegerInOut">
+			<procedure name="JBSPROCINTEGERARRAYINOUT" />
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="N" isArray="true">
+						<value value="1111"></value>
+						<value value="2222"></value>
+						<value value="3333"></value>
+						<value value="4444"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="N" isArray="true">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+			<result>
+				<value value="111"></value>
+				<value value="222"></value>
+				<value value="333"></value>
+			</result>
+		</test>
+		<!-- Test ArrayDouble -->
+		<test name="testExecuteProcedureArrayDoubleIn">
+			<procedure name="JBSPROCDOUBLEARRAYIN" />
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="R" isArray="true">
+						<value value="1111.11"></value>
+						<value value="2222.22"></value>
+						<value value="3333.33"></value>
+						<value value="4444.44"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureArrayDoubleOut">
+			<procedure name="JBSPROCDOUBLEARRAYOUT" />
+			<parameters>
+				<parametersInput>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="R" isArray="true">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+			<result>
+				<value value="111.11"></value>
+				<value value="222.22"></value>
+				<value value="333.33"></value>
+			</result>
+		</test>
+		<test name="testExecuteProcedureArrayDoubleInOut">
+			<procedure name="JBSPROCDOUBLEARRAYINOUT" />
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="R" isArray="true">
+						<value value="1111.11"></value>
+						<value value="2222.22"></value>
+						<value value="3333.33"></value>
+						<value value="4444.44"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="R" isArray="true">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+			<result>
+				<value value="111.11"></value>
+				<value value="222.22"></value>
+				<value value="333.33"></value>
+			</result>
+		</test>
+		<!-- Test ArrayDate -->
+		<test name="testExecuteProcedureArrayDateIn">
+			<procedure name="JBSPROCDATEARRAYIN" />
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="D" isArray="true">
+						<value value="14/12/2010"></value>
+						<value value="15/12/2010"></value>
+						<value value="16/12/2010"></value>
+						<value value="17/12/2010"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureArrayDateOut">
+			<procedure name="JBSPROCDATEARRAYOUT" />
+			<parameters>
+				<parametersInput>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="D" isArray="true">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+			<result>
+				<value value="14/12/2010"></value>
+				<value value="15/12/2010"></value>
+				<value value="16/12/2010"></value>
+			</result>
+		</test>
+		<test name="testExecuteProcedureArrayDateInOut">
+			<procedure name="JBSPROCDATEARRAYINOUT" />
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="D" isArray="true">
+						<value value="14/12/2010"></value>
+						<value value="15/12/2010"></value>
+						<value value="16/12/2010"></value>
+						<value value="17/12/2010"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="D" isArray="true">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+			<result>
+				<value value="14/12/2010"></value>
+				<value value="15/12/2010"></value>
+				<value value="16/12/2010"></value>
+			</result>
+		</test>
+		<!-- Test ArrayDateTime -->
+		<test name="testExecuteProcedureArrayDateTimeIn">
+			<procedure name="JBSPROCDATETIMEARRAYIN" />
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="O" isArray="true">
+						<value value="14/12/2010 12:25"></value>
+						<value value="15/12/2010 13:35"></value>
+						<value value="16/12/2010 14:35"></value>
+						<value value="17/12/2010 15:35"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureArrayDateTimeOut">
+			<procedure name="JBSPROCDATETIMEARRAYOUT" />
+			<parameters>
+				<parametersInput>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="O" isArray="true">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+			<result>
+				<value value="14/12/2010 12:25"></value>
+				<value value="15/12/2010 13:25"></value>
+				<value value="16/12/2010 14:25"></value>
+			</result>
+		</test>
+		<test name="testExecuteProcedureArrayDateTimeInOut">
+			<procedure name="JBSPROCDATETIMEARRAYINOUT" />
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="O" isArray="true">
+						<value value="14/12/2010 12:25"></value>
+						<value value="15/12/2010 13:35"></value>
+						<value value="16/12/2010 14:35"></value>
+						<value value="17/12/2010 15:35"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="O" isArray="true">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+			<result>
+				<value value="14/12/2010 12:25"></value>
+				<value value="15/12/2010 13:25"></value>
+				<value value="16/12/2010 14:25"></value>
+			</result>
+		</test>		
+		<!-- Test ArrayTime -->
+		<test name="testExecuteProcedureArrayTimeIn">
+			<procedure name="JBSPROCTIMEARRAYIN" />
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="T" isArray="true">
+						<value value="12:25"></value>
+						<value value="13:35"></value>
+						<value value="14:35"></value>
+						<value value="15:35"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+				</parametersOutput>
+			</parameters>
+		</test>
+		<test name="testExecuteProcedureArrayTimeOut">
+			<procedure name="JBSPROCTIMEARRAYOUT" />
+			<parameters>
+				<parametersInput>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="T" isArray="true">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+			<result>
+				<value value="12:25"></value>
+				<value value="13:25"></value>
+				<value value="14:25"></value>
+			</result>
+		</test>
+		<test name="testExecuteProcedureArrayTimeInOut">
+			<procedure name="JBSPROCTIMEARRAYINOUT" />
+			<parameters>
+				<parametersInput>
+					<parameter name="paramIn" type="T" isArray="true">
+						<value value="12:25"></value>
+						<value value="13:35"></value>
+						<value value="14:35"></value>
+						<value value="15:35"></value>
+					</parameter>
+				</parametersInput>
+				<parametersOutput>
+					<parameter name="paramOut" type="T" isArray="true">
+					</parameter>
+				</parametersOutput>
+			</parameters>
+			<result>
+				<value value="12:25"></value>
+				<value value="13:25"></value>
+				<value value="14:25"></value>
+			</result>
+		</test>				
 	</tests>
 </configuration>

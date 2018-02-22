@@ -66,4 +66,9 @@ public class Field implements IField, Serializable {
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return "Field [name=" + name + ", value=" + value + ", type=" + type + "]";
+	}
+
 }

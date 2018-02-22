@@ -1,5 +1,6 @@
 package es.bde.aps.jbs.eaijava.plsql;
 
+import java.io.Serializable;
 import java.sql.Array;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -15,7 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import es.bde.aps.jbs.eaijava.Messages;
 import es.bde.aps.jbs.eaijava.exception.EAIJavaException;
-import es.bde.aps.jbs.eaijava.interfaces.Field;
 import es.bde.aps.jbs.eaijava.interfaces.FieldArray;
 import es.bde.aps.jbs.eaijava.interfaces.IField;
 import es.bde.aps.jbs.eaijava.util.ConvertUtil;
@@ -128,10 +128,8 @@ public class EAISQLControlDAO {
 
 		for (int i = 0; i < inputFields.size(); i++) {
 			IField field = (IField) inputFields.get(i);
-			logger.debug(field.getName() + " - " + field.getValue());
 			try {
 				if (field instanceof FieldArray) {
-					// No es un array ni se ha rellenado previamente
 					setInputParameterArray(stmt, field, numFields);
 				} else {
 					setInputParameter(stmt, field, numFields);
@@ -154,17 +152,18 @@ public class EAISQLControlDAO {
 	 * @param numCampos
 	 * @param valoresArray
 	 * @throws SQLException
+	 * @throws ParseException
 	 */
-	private void setInputParameterArray(CallableStatement stmt, IField field, int posicion) throws SQLException {
+	private void setInputParameterArray(CallableStatement stmt, IField field, int posicion) throws Exception {
 		String name = field.getName();
 
 		List<Object> valoresArray = (List<Object>) field.getValue();
-		// El campo se ha enviado de forma correcta
 		String type = ConvertUtil.getTypeArraySQL(field);
 
 		logger.info(Messages.getString("eaijava.messageRegisteringInputParameters", new String[] { name, type }));
 
 		Object[] values = valoresArray.toArray(new Object[valoresArray.size()]);
+		values = (Object[]) ConvertUtil.getObjectSQL(field.getType(), valoresArray);
 
 		ArrayDescriptor descriptor = ArrayDescriptor.createDescriptor(type, connection);
 		ARRAY ar = new ARRAY(descriptor, connection, values);
@@ -206,16 +205,16 @@ public class EAISQLControlDAO {
 		// TODO Ap�ndice de m�todo generado autom�ticamente
 		for (int i = 0; i < outputFields.size(); i++) {
 			IField field = (IField) outputFields.get(i);
+			char type = field.getType();
+			logger.info(Messages.getString("eaijava.messageRegisteringOutputParameters", new String[] { field.getName(), String.valueOf(type), String.valueOf(posicion) }));
 
 			try {
 				if (field instanceof FieldArray) {
 					String sqlType = ConvertUtil.getTypeArraySQL(field);
-					logger.info(Messages.getString("eaijava.messageRegisteringOutputParameters", new String[] { field.getName(), sqlType, String.valueOf(posicion) }));
 					stmt.registerOutParameter(posicion, OracleTypes.ARRAY, sqlType);
 				} else {
-					logger.info(Messages.getString("eaijava.messageRegisteringOutputParameters",
-							new String[] { field.getName(), String.valueOf(field.getType()), String.valueOf(posicion) }));
-					stmt.registerOutParameter(posicion, ConvertUtil.getTypeSQL(field.getType()));
+					int sqlType = ConvertUtil.getTypeSQL(type);
+					stmt.registerOutParameter(posicion, sqlType);
 				}
 				logger.info(Messages.getString("eaijava.messageRegisteredOutputParameters", new String[] { field.getName() }));
 			} catch (SQLException e) {
@@ -230,8 +229,8 @@ public class EAISQLControlDAO {
 	}
 
 	/**
-	 * M�todo que devuelve en un HashMap los valores de los par�metros de la
-	 * invocaci�n a PL/SQL.
+	 * Metodo que devuelve en un HashMap los valores de los parametros de la
+	 * invocacion a PL/SQL.
 	 * 
 	 * @param stmt
 	 *            Statement
@@ -243,14 +242,14 @@ public class EAISQLControlDAO {
 	 */
 	private Map<String, Object> getParametersOut(CallableStatement stmt, List<Object> inputFields, List<Object> outputFields) throws EAIJavaException {
 		Map<String, Object> hParametersOut = new HashMap<String, Object>();
-		if (outputFields == null)
+		if (outputFields == null || outputFields.size() == 0)
 			return hParametersOut;
 
 		try {
 			int pos = 0;
 			if (inputFields.size() > 0) {
 				for (int i = 0; i < inputFields.size(); i++) {
-					Field field = (Field) inputFields.get(i);
+					IField field = (IField) inputFields.get(i);
 					pos++;
 				}
 			}
@@ -263,28 +262,15 @@ public class EAISQLControlDAO {
 				logger.info(Messages.getString("eaijava.messageGettingOutputParameters", new String[] { field.getName(), String.valueOf(type) }));
 				if (field instanceof FieldArray) {
 					Array arrayOracle = stmt.getArray(pos + i);
-					if (arrayOracle != null) {
-						Object[] array = (Object[]) arrayOracle.getArray();
-						if (array == null)
-							continue;
-
-						List<String> arrayValues = new ArrayList<String>();
-						for (int k = 0; k < array.length; k++) {
-
-							String value = (String) ConvertUtil.getObjectJava(type, array[k]);
-							arrayValues.add(value);
-
-						}
-						hParametersOut.put(nameParameter, arrayValues);
-						logger.info(Messages.getString("eaijava.messageGettedOutputParameters", new String[] { nameParameter, arrayValues.toString() }));
-
-					}
+					List<Object> arrayValues = ConvertUtil.getObjectJava(type, arrayOracle);
+					hParametersOut.put(nameParameter, arrayValues);
+					logger.info(Messages.getString("eaijava.messageGettedOutputParameters", new String[] { nameParameter, arrayValues.toString() }));
 
 				} else {
-					Object valueOracle = stmt.getObject(pos + i);
+					Serializable valueOracle = (Serializable) stmt.getObject(pos + i);
 					Object value = ConvertUtil.getObjectJava(type, valueOracle);
-					logger.info(Messages.getString("eaijava.messageGettedOutputParameters", new String[] { field.getName(), String.valueOf(valueOracle) }));
 					hParametersOut.put(nameParameter, value);
+					logger.info(Messages.getString("eaijava.messageGettedOutputParameters", new String[] { field.getName(), String.valueOf(valueOracle) }));
 				}
 			}
 		} catch (Exception e) {
@@ -309,20 +295,17 @@ public class EAISQLControlDAO {
 		strSql.append(user).append(".").append(procedure.toUpperCase()).append("(");
 		int numParameters = 0;
 		if (inputFields != null && inputFields.size() > 0) {
-			for (int i = 0; i < inputFields.size(); i++) {
-				Field field = (Field) inputFields.get(i);
-				numParameters++;
-			}
+			numParameters = inputFields.size();
 		}
 		if (outputFields != null) {
 			numParameters = numParameters + outputFields.size();
-			for (int i = 0; i < numParameters; i++) {
-				strSql.append(" ?");
-				if (i != numParameters - 1) {
-					strSql.append(", ");
-				}
-
+		}
+		for (int i = 0; i < numParameters; i++) {
+			strSql.append("?");
+			if (i != numParameters - 1) {
+				strSql.append(",");
 			}
+
 		}
 		strSql.append(")}");
 		logger.debug(Messages.getString("eaijava.messageSqlGenerated", new String[] { String.valueOf(strSql) }));

@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.bde.aps.jbs.eaijava.EAIConstants;
+import es.bde.aps.jbs.eaijava.interfaces.Field;
 import es.bde.aps.jbs.eaijava.interfaces.IField;
 import es.bde.aps.jbs.eaijava.plsql.EAISQLProcedureWorkItemHandler;
 import es.bde.aps.jbs.eaijava.test.config.ConfigTest;
@@ -18,6 +19,28 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	private Configuration configuration;
 	private long id;
+
+	/**
+	 * 
+	 * @param testName
+	 * @param result
+	 * @return
+	 */
+	private boolean isResultCorrect(String testName, Map<String, Object> result) {
+		ConfigTest configTest = configuration.getConfigTest(testName);
+		List<String> resultExpected = configTest.getResults();
+		List<IField> parametersOutput = configTest.getParametersOutput();
+		IField field = parametersOutput.get(0);
+		if (field instanceof Field) {
+			Object valueReceived = result.get(field.getName());
+			String valueExpected = resultExpected.get(0);
+			return (valueReceived.toString().equals(valueExpected));
+		} else {
+			Object valueReceived = result.get(field.getName());
+			return (valueReceived.toString().equals(resultExpected.toString()));
+		}
+
+	}
 
 	/**
 	 * @param testName
@@ -38,6 +61,28 @@ public class TestEAISQLProcedureWorkItemHandler {
 		workItem.setParameter(EAIConstants.PARAM_LIST_OUT, parametersOuput);
 
 		return workItem;
+	}
+
+	/**
+	 * 
+	 * @param testName
+	 */
+	private void verifyTestOutput(String testName) {
+		TestWorkItemManager manager = new TestWorkItemManager();
+
+		WorkItemImpl workItem = createWorkItem(testName);
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		if (result != null) {
+			Assert.assertTrue("Resultado no esperado [" + result.toString() + "]", isResultCorrect(testName, result));
+		} else {
+			Assert.assertTrue("Resultado vacio", false);
+		}
+
 	}
 
 	@Before
@@ -83,38 +128,15 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	@Test
 	public void testExecuteProcedureVarcharOut() {
-		TestWorkItemManager manager = new TestWorkItemManager();
-		WorkItemImpl workItem = createWorkItem("testExecuteProcedureVarcharOut");
+		String testName = "testExecuteProcedureVarcharOut";
+		verifyTestOutput(testName);
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
-		workItemHandler.executeWorkItem(workItem, manager);
-
-		long id = workItem.getId();
-		Map<String, Object> result = manager.getResult(id);
-		Assert.assertTrue(result != null);
 	}
 
 	@Test
 	public void testExecuteProcedureVarcharInOut() {
-		TestWorkItemManager manager = new TestWorkItemManager();
-		WorkItemImpl workItem = createWorkItem("testExecuteProcedureVarcharInOut");
-
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
-		workItemHandler.executeWorkItem(workItem, manager);
-
-		long id = workItem.getId();
-		Map<String, Object> result = manager.getResult(id);
-		if (result != null) {
-			// IField fieldInput = null;
-			// String valueInput = (String) fieldInput.getValue();
-			// IField fieldOutput = null;
-			// String valueOutput = (String) result.get(fieldOutput.getName());
-
-			// Assert.assertTrue(valueInput.equals(valueOutput));
-		} else {
-			Assert.assertTrue(false);
-		}
-
+		String testName = "testExecuteProcedureVarcharInOut";
+		verifyTestOutput(testName);
 	}
 
 	@Test
@@ -133,37 +155,14 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	@Test
 	public void testExecuteProcedureIntegerOut() {
-		TestWorkItemManager manager = new TestWorkItemManager();
-		WorkItemImpl workItem = createWorkItem("testExecuteProcedureIntegerOut");
-
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
-		workItemHandler.executeWorkItem(workItem, manager);
-
-		long id = workItem.getId();
-		Map<String, Object> result = manager.getResult(id);
-		Assert.assertTrue(result != null);
+		String testName = "testExecuteProcedureIntegerOut";
+		verifyTestOutput(testName);
 	}
 
 	@Test
 	public void testExecuteProcedureIntegerInOut() {
-		TestWorkItemManager manager = new TestWorkItemManager();
-		WorkItemImpl workItem = createWorkItem("testExecuteProcedureIntegerInOut");
-
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
-		workItemHandler.executeWorkItem(workItem, manager);
-
-		long id = workItem.getId();
-		Map<String, Object> result = manager.getResult(id);
-		if (result != null) {
-			// IField fieldInput = null;
-			// String valueInput = (String) fieldInput.getValue();
-			// IField fieldOutput = null;
-			// String valueOutput = (String) result.get(fieldOutput.getName());
-
-			// Assert.assertTrue(valueInput.equals(valueOutput));
-		} else {
-			Assert.assertTrue(false);
-		}
+		String testName = "testExecuteProcedureIntegerInOut";
+		verifyTestOutput(testName);
 
 	}
 
@@ -183,38 +182,14 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	@Test
 	public void testExecuteProcedureDoubleOut() {
-		TestWorkItemManager manager = new TestWorkItemManager();
-		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDoubleOut");
-
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
-		workItemHandler.executeWorkItem(workItem, manager);
-
-		long id = workItem.getId();
-		Map<String, Object> result = manager.getResult(id);
-		Assert.assertTrue(result != null);
+		String testName = "testExecuteProcedureDoubleOut";
+		verifyTestOutput(testName);
 	}
 
 	@Test
 	public void testExecuteProcedureDoubleInOut() {
-		TestWorkItemManager manager = new TestWorkItemManager();
-		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDoubleInOut");
-
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
-		workItemHandler.executeWorkItem(workItem, manager);
-
-		long id = workItem.getId();
-		Map<String, Object> result = manager.getResult(id);
-		if (result != null) {
-			// IField fieldInput = null;
-			// String valueInput = (String) fieldInput.getValue();
-			// IField fieldOutput = null;
-			// String valueOutput = (String) result.get(fieldOutput.getName());
-
-			// Assert.assertTrue(valueInput.equals(valueOutput));
-		} else {
-			Assert.assertTrue(false);
-		}
-
+		String testName = "testExecuteProcedureDoubleInOut";
+		verifyTestOutput(testName);
 	}
 
 	@Test
@@ -233,38 +208,14 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	@Test
 	public void testExecuteProcedureDateOut() {
-		TestWorkItemManager manager = new TestWorkItemManager();
-		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateOut");
-
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
-		workItemHandler.executeWorkItem(workItem, manager);
-
-		long id = workItem.getId();
-		Map<String, Object> result = manager.getResult(id);
-		Assert.assertTrue(result != null);
+		String testName = "testExecuteProcedureDateOut";
+		verifyTestOutput(testName);
 	}
 
 	@Test
 	public void testExecuteProcedureDateInOut() {
-		TestWorkItemManager manager = new TestWorkItemManager();
-		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateInOut");
-
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
-		workItemHandler.executeWorkItem(workItem, manager);
-
-		long id = workItem.getId();
-		Map<String, Object> result = manager.getResult(id);
-		if (result != null) {
-			// IField fieldInput = null;
-			// String valueInput = (String) fieldInput.getValue();
-			// IField fieldOutput = null;
-			// String valueOutput = (String) result.get(fieldOutput.getName());
-
-			// Assert.assertTrue(valueInput.equals(valueOutput));
-		} else {
-			Assert.assertTrue(false);
-		}
-
+		String testName = "testExecuteProcedureDateInOut";
+		verifyTestOutput(testName);
 	}
 
 	@Test
@@ -283,42 +234,19 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	@Test
 	public void testExecuteProcedureDateTimeOut() {
-		TestWorkItemManager manager = new TestWorkItemManager();
-		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateTimeOut");
-
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
-		workItemHandler.executeWorkItem(workItem, manager);
-
-		long id = workItem.getId();
-		Map<String, Object> result = manager.getResult(id);
-		Assert.assertTrue(result != null);
+		String testName = "testExecuteProcedureDateTimeOut";
+		verifyTestOutput(testName);
 	}
 
 	@Test
 	public void testExecuteProcedureDateTimeInOut() {
-		TestWorkItemManager manager = new TestWorkItemManager();
-		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateTimeInOut");
-
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
-		workItemHandler.executeWorkItem(workItem, manager);
-
-		long id = workItem.getId();
-		Map<String, Object> result = manager.getResult(id);
-		if (result != null) {
-			// IField fieldInput = null;
-			// String valueInput = (String) fieldInput.getValue();
-			// IField fieldOutput = null;
-			// String valueOutput = (String) result.get(fieldOutput.getName());
-
-			// Assert.assertTrue(valueInput.equals(valueOutput));
-		} else {
-			Assert.assertTrue(false);
-		}
-
+		String testName = "testExecuteProcedureDateTimeInOut";
+		verifyTestOutput(testName);
 	}
 
 	@Test
 	public void testExecuteProcedureTimeIn() {
+
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureTimeIn");
 
@@ -333,8 +261,20 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	@Test
 	public void testExecuteProcedureTimeOut() {
+		String testName = "testExecuteProcedureTimeOut";
+		verifyTestOutput(testName);
+	}
+
+	@Test
+	public void testExecuteProcedureTimeInOut() {
+		String testName = "testExecuteProcedureTimeInOut";
+		verifyTestOutput(testName);
+	}
+
+	@Test
+	public void testExecuteProcedureArrayVarcharIn() {
 		TestWorkItemManager manager = new TestWorkItemManager();
-		WorkItemImpl workItem = createWorkItem("testExecuteProcedureTimeOut");
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayVarcharIn");
 
 		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
 		workItemHandler.executeWorkItem(workItem, manager);
@@ -342,28 +282,148 @@ public class TestEAISQLProcedureWorkItemHandler {
 		long id = workItem.getId();
 		Map<String, Object> result = manager.getResult(id);
 		Assert.assertTrue(result != null);
+
 	}
 
 	@Test
-	public void testExecuteProcedureTimeInOut() {
+	public void testExecuteProcedureArrayVarcharOut() {
+		String testName = "testExecuteProcedureArrayVarcharOut";
+		verifyTestOutput(testName);
+	}
+
+	@Test
+	public void testExecuteProcedureArrayVarcharInOut() {
+		String testName = "testExecuteProcedureArrayVarcharInOut";
+		verifyTestOutput(testName);
+	}
+
+	@Test
+	public void testExecuteProcedureArrayIntegerIn() {
 		TestWorkItemManager manager = new TestWorkItemManager();
-		WorkItemImpl workItem = createWorkItem("testExecuteProcedureTimeInOut");
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayIntegerIn");
 
 		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();
 		Map<String, Object> result = manager.getResult(id);
-		if (result != null) {
-			// IField fieldInput = null;
-			// String valueInput = (String) fieldInput.getValue();
-			// IField fieldOutput = null;
-			// String valueOutput = (String) result.get(fieldOutput.getName());
+		Assert.assertTrue(result != null);
 
-			// Assert.assertTrue(valueInput.equals(valueOutput));
-		} else {
-			Assert.assertTrue(false);
-		}
+	}
 
+	@Test
+	public void testExecuteProcedureArrayIntegerOut() {
+		String testName = "testExecuteProcedureArrayIntegerOut";
+		verifyTestOutput(testName);
+	}
+
+	@Test
+	public void testExecuteProcedureArrayIntegerInOut() {
+		String testName = "testExecuteProcedureArrayIntegerInOut";
+		verifyTestOutput(testName);
+	}
+
+	@Test
+	public void testExecuteProcedureArrayDoubleIn() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayDoubleIn");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		Assert.assertTrue(result != null);
+
+	}
+
+	@Test
+	public void testExecuteProcedureArrayDoubleOut() {
+		String testName = "testExecuteProcedureArrayDoubleOut";
+		verifyTestOutput(testName);
+	}
+
+	@Test
+	public void testExecuteProcedureArrayDoubleInOut() {
+		String testName = "testExecuteProcedureArrayDoubleInOut";
+		verifyTestOutput(testName);
+	}
+
+	@Test
+	public void testExecuteProcedureArrayDateIn() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayDateIn");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		Assert.assertTrue(result != null);
+
+	}
+
+	@Test
+	public void testExecuteProcedureArrayDateOut() {
+		String testName = "testExecuteProcedureArrayDateOut";
+		verifyTestOutput(testName);
+	}
+
+	@Test
+	public void testExecuteProcedureArrayDateInOut() {
+		String testName = "testExecuteProcedureArrayDateInOut";
+		verifyTestOutput(testName);
+	}
+
+	@Test
+	public void testExecuteProcedureArrayDateTimeIn() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayDateTimeIn");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		Assert.assertTrue(result != null);
+
+	}
+
+	@Test
+	public void testExecuteProcedureArrayDateTimeOut() {
+		String testName = "testExecuteProcedureArrayDateTimeOut";
+		verifyTestOutput(testName);
+	}
+
+	@Test
+	public void testExecuteProcedureArrayDateTimeInOut() {
+		String testName = "testExecuteProcedureArrayDateTimeInOut";
+		verifyTestOutput(testName);
+	}
+
+	@Test
+	public void testExecuteProcedureArrayTimeIn() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayTimeIn");
+
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+
+		long id = workItem.getId();
+		Map<String, Object> result = manager.getResult(id);
+		Assert.assertTrue(result != null);
+
+	}
+
+	@Test
+	public void testExecuteProcedureArrayTimeOut() {
+		String testName = "testExecuteProcedureArrayTimeOut";
+		verifyTestOutput(testName);
+	}
+
+	@Test
+	public void testExecuteProcedureArrayTimeInOut() {
+		String testName = "testExecuteProcedureArrayTimeInOut";
+		verifyTestOutput(testName);
 	}
 }

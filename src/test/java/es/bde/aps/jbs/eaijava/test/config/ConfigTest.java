@@ -11,6 +11,7 @@ public class ConfigTest {
 	private String procedure;
 	private List<IField> parametersInput;
 	private List<IField> parametersOutput;
+	private List<String> results;
 
 	/**
 	 * @return
@@ -93,6 +94,25 @@ public class ConfigTest {
 	@Override
 	public String toString() {
 		return "ConfigTest [name=" + name + ", procedure=" + procedure + "]";
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public List<String> getResults() {
+		return results;
+	}
+
+	/**
+	 * 
+	 * @param value
+	 */
+	public void addResultValue(String value) {
+		if (results == null) {
+			results = new ArrayList<String>();
+		}
+		results.add(value);
 	}
 
 }

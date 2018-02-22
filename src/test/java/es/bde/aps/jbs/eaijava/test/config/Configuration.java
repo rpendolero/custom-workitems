@@ -38,6 +38,8 @@ public class Configuration {
 		private String pathParameterInput = "configuration/tests/test/parameters/parametersInput/parameter/";
 		private String pathParameterInputValue = "configuration/tests/test/parameters/parametersInput/parameter/value/";
 		private String pathParameterOutput = "configuration/tests/test/parameters/parametersOutput/parameter/";
+		private String pathResultValue = "configuration/tests/test/result/value/";
+
 		private String nameTest;
 		private IField field;
 		private ConfigTest configTest;
@@ -80,6 +82,12 @@ public class Configuration {
 				String isArrayAttribute = attributes.getValue(ATT_ARRAY);
 				field = createField(nameAttribute, typeAttribute, isArrayAttribute);
 				configTest.addParameterOutput(field);
+			}
+
+			if (sPath.toString().equals(pathResultValue)) {
+				String valueAttribute = attributes.getValue(ATT_VALUE);
+				configTest.addResultValue(valueAttribute);
+
 			}
 		}
 

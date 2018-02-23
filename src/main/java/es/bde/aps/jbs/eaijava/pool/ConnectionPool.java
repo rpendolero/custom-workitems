@@ -19,6 +19,7 @@ import es.bde.aps.jbs.eaijava.EAIConstants;
 import es.bde.aps.jbs.eaijava.Messages;
 import es.bde.aps.jbs.eaijava.exception.EAIJavaException;
 import es.bde.aps.jbs.eaijava.util.DESEncrypter;
+import es.bde.aps.jbs.eaijava.util.Properties;
 import es.bde.aps.jbs.eaijava.util.PropertiesFactory;
 import oracle.jdbc.pool.OracleDataSource;
 
@@ -34,6 +35,7 @@ public class ConnectionPool extends GenericObjectPool {
 	private String driverName;
 	private String schemaOwner;
 	private ConnectionFactory connectionFactory;
+	private Properties properties;
 
 	/**
 	 * Constructor
@@ -44,20 +46,22 @@ public class ConnectionPool extends GenericObjectPool {
 		this.setTestOnBorrow(true);
 		this.setTestOnReturn(true);
 
+		properties = PropertiesFactory.getProperties(EAIConstants.PROPERTIES_DATABASE);
+
 		// Se inicializa con el algoritmo de agotamiento de conexiones.
 		this.setWhenExhaustedAction(WHEN_EXHAUSTED_GROW);
 
 		// Se obtiene el n�mero de conexiones m�ximas abiertas
-		setMaxActive(PropertiesFactory.getInt(namePool + PropertiesFactory.MAX_ACTIVE));
+		setMaxActive(properties.getInt(namePool + EAIConstants.MAX_ACTIVE));
 
 		// Se obtiene el n�mero de conexiones ocupadas a la vez.
-		setMaxIdle(PropertiesFactory.getInt(namePool + PropertiesFactory.MAX_IDLE));
+		setMaxIdle(properties.getInt(namePool + EAIConstants.MAX_IDLE));
 
 		// Se obtiene si las operaciones sobre la base de datos son autocommit
 		boolean isAutoCommit = false;
-		isAutoCommit = PropertiesFactory.getBoolean(namePool + PropertiesFactory.AUTO_COMMIT);
+		isAutoCommit = properties.getBoolean(namePool + EAIConstants.AUTO_COMMIT);
 
-		schemaOwner = PropertiesFactory.getString(namePool + PropertiesFactory.SCHEMA_OWNER);
+		schemaOwner = properties.getString(namePool + EAIConstants.SCHEMA_OWNER);
 
 		// Se crea la factoria encargada para crear las conexiones a
 		// base de datos.
@@ -85,34 +89,34 @@ public class ConnectionPool extends GenericObjectPool {
 			String message = Messages.getString("eaijava.errorDataSourceCreating", new String[] { e1.getMessage() });
 			throw new EAIJavaException(message);
 		}
-		driverName = PropertiesFactory.getString(namePool + PropertiesFactory.DRIVER_NAME);
+		driverName = properties.getString(namePool + EAIConstants.DRIVER_NAME);
 		if (driverName == null) {
-			String message = Messages.getString("eaijava.errorDataSourceProperty", new String[] { namePool, PropertiesFactory.DRIVER_NAME });
+			String message = Messages.getString("eaijava.errorDataSourceProperty", new String[] { namePool, EAIConstants.DRIVER_NAME });
 			throw new EAIJavaException(message);
 		}
 
 		// dataSource.setDriverClassName(driverName);
 		logger.debug(Messages.getString("eaijava.messageDataSourceDriver", new String[] { driverName }));
 
-		user = PropertiesFactory.getString(namePool + PropertiesFactory.USER);
+		user = properties.getString(namePool + EAIConstants.USER);
 		if (user == null) {
-			String message = Messages.getString("eaijava.errorDataSourceProperty", new String[] { namePool, PropertiesFactory.USER });
+			String message = Messages.getString("eaijava.errorDataSourceProperty", new String[] { namePool, EAIConstants.USER });
 			throw new EAIJavaException(message);
 		}
 		dataSource.setUser(user);
 		logger.debug(Messages.getString("eaijava.messageDataSourceUser", new String[] { user }));
 
-		String connectUrl = PropertiesFactory.getString(namePool + PropertiesFactory.CONNECTION);
+		String connectUrl = properties.getString(namePool + EAIConstants.CONNECTION);
 		if (connectUrl == null) {
-			String message = Messages.getString("eaijava.errorDataSourceProperty", new String[] { namePool, PropertiesFactory.CONNECTION });
+			String message = Messages.getString("eaijava.errorDataSourceProperty", new String[] { namePool, EAIConstants.CONNECTION });
 			throw new EAIJavaException(message);
 		}
 		dataSource.setURL(connectUrl);
 		logger.debug(Messages.getString("eaijava.messageDataSourceUrl", new String[] { connectUrl }));
 		// Se desencripta la password
-		String passwordEncrypt = PropertiesFactory.getString(namePool + PropertiesFactory.PASSWORD);
+		String passwordEncrypt = properties.getString(namePool + EAIConstants.PASSWORD);
 		if (passwordEncrypt == null) {
-			String message = Messages.getString("eaijava.errorDataSourceProperty", new String[] { namePool, PropertiesFactory.PASSWORD });
+			String message = Messages.getString("eaijava.errorDataSourceProperty", new String[] { namePool, EAIConstants.PASSWORD });
 			throw new EAIJavaException(message);
 		}
 		DESEncrypter encrypter;

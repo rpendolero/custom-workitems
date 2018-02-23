@@ -16,7 +16,6 @@ import es.bde.aps.jbs.eaijava.Messages;
 import es.bde.aps.jbs.eaijava.pool.ConnectionPool;
 import es.bde.aps.jbs.eaijava.pool.ConnectionPoolFactory;
 import es.bde.aps.jbs.eaijava.util.ClassSearchUtils;
-import es.bde.aps.jbs.eaijava.util.PropertiesFactory;
 
 /**
  * 
@@ -75,19 +74,12 @@ public class EAISQLProcedureWorkItemHandler implements WorkItemHandler {
 
 				logger.info("Lista de campos de salida [" + listOutputFields.toString() + "]");
 			}
-
-			// Se busca la propiedad que define el usuario de la base de datos
-
-			String keyProperty = application + PropertiesFactory.SCHEMA_OWNER;
-			String user = PropertiesFactory.getString(keyProperty);
-			logger.info("Creando conexion para el usuario [" + user + "] en la aplicacion [" + application + "]");
-
 			// Se obtiene el pool y una conexion a la base de datos
 			pool = ConnectionPoolFactory.getPool(application);
 
 			connection = (Connection) pool.borrowObject();
 			EAISQLControlDAO controlDAO = new EAISQLControlDAO(connection);
-			Map<String, Object> results = controlDAO.executeProcedure(reference, procedure, user, listInputFields, listOutputFields);
+			Map<String, Object> results = controlDAO.executeProcedure(reference, procedure, listInputFields, listOutputFields);
 
 			logger.info(Messages.getString("eaijava.messageExecuteProcedureOK", new String[] { reference, procedure, application }));
 			manager.completeWorkItem(workItem.getId(), results);

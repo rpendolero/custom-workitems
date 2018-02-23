@@ -14,11 +14,14 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.bde.aps.jbs.eaijava.EAIConstants;
 import es.bde.aps.jbs.eaijava.Messages;
 import es.bde.aps.jbs.eaijava.exception.EAIJavaException;
 import es.bde.aps.jbs.eaijava.interfaces.FieldArray;
 import es.bde.aps.jbs.eaijava.interfaces.IField;
 import es.bde.aps.jbs.eaijava.util.ConvertUtil;
+import es.bde.aps.jbs.eaijava.util.Properties;
+import es.bde.aps.jbs.eaijava.util.PropertiesFactory;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 import oracle.sql.ARRAY;
@@ -65,9 +68,9 @@ public class EAISQLControlDAO {
 	 * @return
 	 * @throws EAIJavaException
 	 */
-	public Map<String, Object> executeProcedure(String reference, String procedure, String user, List<Object> inputFields, List<Object> outputFields) throws EAIJavaException {
+	public Map<String, Object> executeProcedure(String reference, String procedure, List<Object> inputFields, List<Object> outputFields) throws EAIJavaException {
 
-		String sql = generateSql(procedure, user, inputFields, outputFields);
+		String sql = generateSql(procedure, inputFields, outputFields);
 
 		logger.info(Messages.getString("eaijava.messageExecuteSql", new String[] { reference, procedure, inputFields.toString(), outputFields.toString() }));
 		OracleCallableStatement stmt = null;
@@ -287,9 +290,15 @@ public class EAISQLControlDAO {
 	 * @param inputFields
 	 * @param outputFields
 	 * @return
+	 * @throws EAIJavaException
 	 */
 
-	private String generateSql(String procedure, String user, List<Object> inputFields, List<Object> outputFields) {
+	private String generateSql(String procedure, List<Object> inputFields, List<Object> outputFields) throws EAIJavaException {
+
+		Properties properties = PropertiesFactory.getProperties(EAIConstants.PROPERTIES_DATABASE);
+		String application = procedure.substring(0, 3).toLowerCase();
+		String keyProperty = application + EAIConstants.SCHEMA_OWNER;
+		String user = properties.getString(keyProperty);
 
 		StringBuffer strSql = new StringBuffer("{call ");
 		strSql.append(user).append(".").append(procedure.toUpperCase()).append("(");

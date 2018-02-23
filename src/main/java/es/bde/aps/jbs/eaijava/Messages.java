@@ -49,7 +49,7 @@ public class Messages {
 	 * @param args
 	 * @return
 	 */
-	public static String getString(String key, String args[]) {
+	public static String getString(String key, String... args) {
 		// TODO Apéndice de método generado automáticamente
 		try {
 			String formatkey = RESOURCE_BUNDLE.getString(key);

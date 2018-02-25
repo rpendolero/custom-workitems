@@ -68,7 +68,10 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 		// Set recipients
 		Recipients recipients = new Recipients();
 
-		String parameter = (String) workItem.getParameter(EAIConstants.MAIL_TO);
+		String parameter = null;
+		String mailTo = (String) workItem.getParameter(EAIConstants.MAIL_TO);
+		String mailToGroup = (String) workItem.getParameter(EAIConstants.MAIL_TO_GROUP);
+		parameter = validateAdresses(mailTo, mailToGroup);
 		logger.info(Messages.getString("eaijava.messageMailTo", reference, parameter));
 		recipients = addRecipients(recipients, parameter, javax.mail.Message.RecipientType.TO);
 		parameter = (String) workItem.getParameter(EAIConstants.MAIL_CC);
@@ -77,7 +80,6 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 		parameter = (String) workItem.getParameter(EAIConstants.MAIL_CCO);
 		logger.info(Messages.getString("eaijava.messageMailAddressCCO", reference, parameter));
 		recipients = addRecipients(recipients, parameter, javax.mail.Message.RecipientType.BCC);
-		parameter = (String) workItem.getParameter(EAIConstants.MAIL_TO_GROUP);
 		String addressMail = findUsersOfGroups(parameter);
 		// Fill message
 		message.setRecipients(recipients);
@@ -127,5 +129,53 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 	 */
 	private String findUsersOfGroups(String fieldMailToGroup) throws EAIJavaException {
 		return null;
+	}
+
+	/**
+	 * M�todo que valida y devuelve las direccciones destiunatrias del correo.
+	 * 
+	 * @param fieldMailTo
+	 *            Valor del campo MAIL_TO
+	 * @param fieldMailToGroup
+	 *            Valor del campo MAIL_TO_GROUP
+	 * @return
+	 * @throws EAIJavaException
+	 */
+	private String validateAdresses(String fieldMailTo, String fieldMailToGroup) throws EAIJavaException {
+		String fieldTo = null;
+		// Se valida que los destinatarios bvengan vacios, en este caso se
+		// enviar� un error de ejecuci�n
+		if (fieldMailTo == null || "".equals(fieldMailTo)) {
+			if (fieldMailToGroup == null || "".equals(fieldMailToGroup)) {
+				String message = Messages.getString("eaijava.errorMailRecipientNotDefined");
+				throw new EAIJavaException(message);
+			}
+			fieldTo = "";
+		} else {
+
+			fieldTo = fieldMailTo + ";";
+		}
+
+		if (fieldMailToGroup != null) {
+			// Se busca los usuarios que pertenecen los grupos que se reciben
+			// como destinatarios del correo.
+			fieldTo += findUsersOfGroups(fieldMailToGroup);
+
+			// Si el valor de los usuarios destinarios es vacio se lanza un
+			// error
+			if (fieldTo == null || "".equals(fieldTo)) {
+				logger.info(Messages.getString("eaijava.errorMailUsersNotAssigned", new String[] { fieldMailToGroup }));
+
+				// Si no existen nung�n destinatario en el campo MAIL_TO se
+				// propaga una excepcion.
+				if (fieldMailTo == null || "".equals(fieldMailTo)) {
+					String message = Messages.getString("eaijava.errorMailRecipientNotFound");
+					throw new EAIJavaException(message);
+				}
+
+			}
+		}
+
+		return fieldTo;
 	}
 }

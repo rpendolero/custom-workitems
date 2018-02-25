@@ -8,7 +8,9 @@ import org.kie.api.runtime.process.WorkItemManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.bde.aps.jbs.eaijava.EAIConstants;
 import es.bde.aps.jbs.eaijava.Messages;
+import es.bde.aps.jbs.eaijava.exception.EAIJavaException;
 
 public class EAIMailWorkItemHandler implements WorkItemHandler {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -16,8 +18,7 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.kie.api.runtime.process.WorkItemHandler#abortWorkItem(org.kie.api.
+	 * @see org.kie.api.runtime.process.WorkItemHandler#abortWorkItem(org.kie.api.
 	 * runtime.process.WorkItem, org.kie.api.runtime.process.WorkItemManager)
 	 */
 	public void abortWorkItem(WorkItem workItem, WorkItemManager manager) {
@@ -27,8 +28,7 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.kie.api.runtime.process.WorkItemHandler#executeWorkItem(org.kie.api.
+	 * @see org.kie.api.runtime.process.WorkItemHandler#executeWorkItem(org.kie.api.
 	 * runtime.process.WorkItem, org.kie.api.runtime.process.WorkItemManager)
 	 */
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
@@ -39,7 +39,7 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 		logger.info(Messages.getString("eaijava.messageExecuteMail", reference));
 		try {
 
-			Email email = createEmail(workItem);
+			Email email = createEmail(reference, workItem);
 			SendHtml.sendHtml(email);
 
 			logger.info(Messages.getString("eaijava.messageMailSendedCorrectly", reference));
@@ -55,10 +55,12 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 
 	/**
 	 * 
+	 * @param reference
 	 * @param workItem
 	 * @return
+	 * @throws EAIJavaException
 	 */
-	private Email createEmail(WorkItem workItem) {
+	private Email createEmail(String reference, WorkItem workItem) throws EAIJavaException {
 
 		Email email = new Email();
 		Message message = new Message();
@@ -66,17 +68,28 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 		// Set recipients
 		Recipients recipients = new Recipients();
 
-		String parameter = (String) workItem.getParameter("To");
+		String parameter = (String) workItem.getParameter(EAIConstants.MAIL_TO);
+		logger.info(Messages.getString("eaijava.messageMailTo", reference, parameter));
 		recipients = addRecipients(recipients, parameter, javax.mail.Message.RecipientType.TO);
-		parameter = (String) workItem.getParameter("Cc");
+		parameter = (String) workItem.getParameter(EAIConstants.MAIL_CC);
+		logger.info(Messages.getString("eaijava.messageMailAddressCC", reference, parameter));
 		recipients = addRecipients(recipients, parameter, javax.mail.Message.RecipientType.CC);
-		parameter = (String) workItem.getParameter("Bcc");
+		parameter = (String) workItem.getParameter(EAIConstants.MAIL_CCO);
+		logger.info(Messages.getString("eaijava.messageMailAddressCCO", reference, parameter));
 		recipients = addRecipients(recipients, parameter, javax.mail.Message.RecipientType.BCC);
-
+		parameter = (String) workItem.getParameter(EAIConstants.MAIL_TO_GROUP);
+		String addressMail = findUsersOfGroups(parameter);
 		// Fill message
 		message.setRecipients(recipients);
-		message.setSubject((String) workItem.getParameter("Subject"));
-		message.setBody((String) workItem.getParameter("Body"));
+		parameter = (String) workItem.getParameter(EAIConstants.MAIL_FROM);
+		message.setFrom(parameter);
+		logger.info(Messages.getString("eaijava.messageAddressFrom", reference, parameter));
+		parameter = (String) workItem.getParameter(EAIConstants.MAIL_SUBJECT);
+		message.setSubject(parameter);
+		logger.info(Messages.getString("eaijava.messageMailSubject", reference, parameter));
+		parameter = (String) workItem.getParameter(EAIConstants.MAIL_BODY);
+		message.setBody(parameter);
+		logger.info(Messages.getString("eaijava.messageMailBody", reference, parameter));
 
 		// setup email
 		email.setMessage(message);
@@ -106,4 +119,13 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 		return recipients;
 	}
 
+	/**
+	 * 
+	 * @param fieldMailToGroup
+	 * @return
+	 * @throws EAIJavaException
+	 */
+	private String findUsersOfGroups(String fieldMailToGroup) throws EAIJavaException {
+		return null;
+	}
 }

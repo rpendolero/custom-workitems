@@ -44,6 +44,8 @@ public class EAIConstants {
 
 	public static final String PROP_DIRECTORY_ATTACH = "eaijava.directory.attach";
 	public static final String PROP_SERVER_MAIL = "mail.smtp.host";
+	public static final String PROP_SMTP_USER = "mail.smtp.user";
+	public static final String PROP_SMTP_PWD = "mail.smtp.password";
 	public static final String PROP_PROTOCOL_MAIL = "eaijava.protocol";
 	public static final String PROP_SQL_USERS_GROUP = "eaijava.sql.users.group";
 

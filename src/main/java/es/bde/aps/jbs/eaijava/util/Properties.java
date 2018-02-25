@@ -50,8 +50,8 @@ public class Properties {
 	}
 
 	/**
-	 * Comprueba la existencia de una propiedad en el archivo de
-	 * configuraci�n. En caso contrario lanza una excepci�n.
+	 * Comprueba la existencia de una propiedad en el archivo de configuraci�n. En
+	 * caso contrario lanza una excepci�n.
 	 * 
 	 * @param propertyName
 	 *            Nombre de la propiedad
@@ -70,8 +70,8 @@ public class Properties {
 	}
 
 	/**
-	 * Comprueba la existencia de una propiedad en el archivo de
-	 * configuraci�n. En caso contrario lanza una excepci�n.
+	 * Comprueba la existencia de una propiedad en el archivo de configuraci�n. En
+	 * caso contrario lanza una excepci�n.
 	 * 
 	 * @param propertyName
 	 *            Nombre de la propiedad
@@ -106,6 +106,11 @@ public class Properties {
 	protected void load(Reader inStream) throws IOException {
 		properties.load(inStream);
 
+	}
+
+	public java.util.Properties getReference() {
+		// TODO Auto-generated method stub
+		return properties;
 	}
 
 }

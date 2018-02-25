@@ -1,4 +1,4 @@
-package es.bde.aps.jbs.eaijava.test;
+package es.bde.aps.jbs.eaijava.plsql.test;
 
 import java.util.List;
 import java.util.Map;
@@ -9,11 +9,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.bde.aps.jbs.eaijava.EAIConstants;
+import es.bde.aps.jbs.eaijava.TestWorkItemManager;
 import es.bde.aps.jbs.eaijava.interfaces.Field;
 import es.bde.aps.jbs.eaijava.interfaces.IField;
 import es.bde.aps.jbs.eaijava.plsql.EAISQLProcedureWorkItemHandler;
-import es.bde.aps.jbs.eaijava.test.config.ConfigTest;
-import es.bde.aps.jbs.eaijava.test.config.Configuration;
+import es.bde.aps.jbs.eaijava.plsql.test.config.ConfigTest;
+import es.bde.aps.jbs.eaijava.plsql.test.config.Configuration;
 
 public class TestEAISQLProcedureWorkItemHandler {
 

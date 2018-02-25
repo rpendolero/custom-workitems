@@ -1,4 +1,4 @@
-package es.bde.aps.jbs.eaijava.test.config;
+package es.bde.aps.jbs.eaijava.plsql.test.config;
 
 import java.util.ArrayList;
 import java.util.List;

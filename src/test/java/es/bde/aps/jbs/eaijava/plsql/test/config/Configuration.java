@@ -1,4 +1,4 @@
-package es.bde.aps.jbs.eaijava.test.config;
+package es.bde.aps.jbs.eaijava.plsql.test.config;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -129,7 +129,7 @@ public class Configuration {
 	 * @throws Exception
 	 */
 	protected void load() throws Exception {
-		// TODO Apéndice de método generado automáticamente
+		// TODO Apï¿½ndice de mï¿½todo generado automï¿½ticamente
 
 		InputStream input = Configuration.class.getResourceAsStream(FICHERO_CONFIG);
 		if (input == null)
@@ -148,10 +148,10 @@ public class Configuration {
 		try {
 			getParser().parse(input, handler);
 		} catch (SAXException e) {
-			// TODO Bloque catch generado automáticamente
+			// TODO Bloque catch generado automï¿½ticamente
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Bloque catch generado automáticamente
+			// TODO Bloque catch generado automï¿½ticamente
 			e.printStackTrace();
 		}
 

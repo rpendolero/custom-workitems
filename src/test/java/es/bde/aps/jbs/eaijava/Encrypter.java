@@ -4,7 +4,7 @@
  * TODO Para cambiar la plantilla de este archivo generado, vaya a
  * Ventana - Preferencias - Java - Estilo de c�digo - Plantillas de c�digo
  */
-package es.bde.aps.jbs.eaijava.test;
+package es.bde.aps.jbs.eaijava;
 
 import es.bde.aps.jbs.eaijava.EAIConstants;
 import es.bde.aps.jbs.eaijava.util.DESEncrypter;

@@ -23,7 +23,6 @@ import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.activation.MimetypesFileTypeMap;
@@ -37,8 +36,11 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+
+import es.bde.aps.jbs.eaijava.EAIConstants;
+import es.bde.aps.jbs.eaijava.exception.EAIJavaException;
+import es.bde.aps.jbs.eaijava.util.Properties;
+import es.bde.aps.jbs.eaijava.util.PropertiesFactory;
 
 public class SendHtml {
 
@@ -47,8 +49,9 @@ public class SendHtml {
 
 	/**
 	 * @param email
+	 * @throws EAIJavaException
 	 */
-	public static void sendHtml(Email email) {
+	public static void sendHtml(Email email) throws EAIJavaException {
 
 		Session session = SessionFactory.getSession();
 		boolean debug = false;
@@ -61,7 +64,15 @@ public class SendHtml {
 			Transport transport = (Transport) session.getTransport(TRANSPORT_TYPE);
 			try {
 				// transport.connect(mailhost, port, username, password);
-				transport.connect();
+				Properties properties = PropertiesFactory.getProperties(EAIConstants.PROPERTIES_MAIL);
+				String user = properties.getString(EAIConstants.PROP_SMTP_USER);
+				if (user == null || "".equals(user)) {
+					transport.connect();
+				} else {
+					String password = properties.getString(EAIConstants.PROP_SMTP_PWD);
+
+					transport.connect(user, password);
+				}
 				transport.sendMessage(msg, msg.getAllRecipients());
 			} catch (Exception e) {
 				throw new RuntimeException("Connection failure", e);

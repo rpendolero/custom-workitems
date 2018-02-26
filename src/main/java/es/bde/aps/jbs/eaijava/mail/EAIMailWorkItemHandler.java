@@ -80,7 +80,7 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 		parameter = (String) workItem.getParameter(EAIConstants.MAIL_CCO);
 		logger.info(Messages.getString("eaijava.messageMailAddressCCO", reference, parameter));
 		recipients = addRecipients(recipients, parameter, javax.mail.Message.RecipientType.BCC);
-		String addressMail = findUsersOfGroups(parameter);
+
 		// Fill message
 		message.setRecipients(recipients);
 		parameter = (String) workItem.getParameter(EAIConstants.MAIL_FROM);

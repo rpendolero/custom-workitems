@@ -38,11 +38,12 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
 import es.bde.aps.jbs.eaijava.EAIConstants;
+import es.bde.aps.jbs.eaijava.Messages;
 import es.bde.aps.jbs.eaijava.exception.EAIJavaException;
 import es.bde.aps.jbs.eaijava.util.Properties;
 import es.bde.aps.jbs.eaijava.util.PropertiesFactory;
 
-public class SendHtml {
+public class MailSender {
 
 	private static final String CONTENT_TYPE = "text/html";
 	private static final String TRANSPORT_TYPE = "smtp";
@@ -51,7 +52,7 @@ public class SendHtml {
 	 * @param email
 	 * @throws EAIJavaException
 	 */
-	public static void sendHtml(Email email) throws EAIJavaException {
+	public static void sendMail(Email email) throws EAIJavaException {
 
 		Session session = SessionFactory.getSession();
 		boolean debug = false;
@@ -65,12 +66,11 @@ public class SendHtml {
 			try {
 				// transport.connect(mailhost, port, username, password);
 				Properties properties = PropertiesFactory.getProperties(EAIConstants.PROPERTIES_MAIL);
-				String user = properties.getString(EAIConstants.PROP_SMTP_USER);
+				String user = (String) properties.getProperty(EAIConstants.PROP_SMTP_USER);
 				if (user == null || "".equals(user)) {
 					transport.connect();
 				} else {
 					String password = properties.getString(EAIConstants.PROP_SMTP_PWD);
-
 					transport.connect(user, password);
 				}
 				transport.sendMessage(msg, msg.getAllRecipients());
@@ -128,17 +128,8 @@ public class SendHtml {
 				multipart.addBodyPart(messageBodyPart);
 
 				List<String> attachments = message.getAttachments();
-				for (String attachment : attachments) {
-					MimeBodyPart attachementBodyPart = new MimeBodyPart();
-					URL attachmentUrl = getAttachemntURL(attachment);
-					String contentType = MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(attachmentUrl.getFile());
-					attachementBodyPart.setDataHandler(new DataHandler(new ByteArrayDataSource(attachmentUrl.openStream(), contentType)));
-					String fileName = new File(attachmentUrl.getFile()).getName();
-					attachementBodyPart.setFileName(fileName);
-					attachementBodyPart.setContentID("<" + fileName + ">");
+				attachFiles(multipart, attachments);
 
-					multipart.addBodyPart(attachementBodyPart);
-				}
 				// Put parts in message
 				msg.setContent(multipart);
 			} else {
@@ -154,6 +145,34 @@ public class SendHtml {
 		}
 
 		return msg;
+	}
+
+	/**
+	 * 
+	 * @param multipart
+	 * @param attachments
+	 * @throws MalformedURLException
+	 */
+	private static void attachFiles(Multipart multipart, List<String> attachments) throws EAIJavaException {
+		for (String attachment : attachments) {
+			MimeBodyPart attachementBodyPart = new MimeBodyPart();
+
+			try {
+				URL attachmentUrl = getAttachemntURL(attachment);
+
+				String contentType = MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(attachmentUrl.getFile());
+				attachementBodyPart.setDataHandler(new DataHandler(new ByteArrayDataSource(attachmentUrl.openStream(), contentType)));
+				String fileName = new File(attachmentUrl.getFile()).getName();
+				attachementBodyPart.setFileName(fileName);
+				attachementBodyPart.setContentID("<" + fileName + ">");
+
+				multipart.addBodyPart(attachementBodyPart);
+
+			} catch (Exception e) {
+				throw new EAIJavaException(Messages.getString("eaijava.errorMailAddAtachFiles", attachment));
+			}
+		}
+
 	}
 
 	/**
@@ -187,7 +206,7 @@ public class SendHtml {
 	protected static URL getAttachemntURL(String attachment) throws MalformedURLException {
 		if (attachment.startsWith("classpath:")) {
 			String location = attachment.replaceFirst("classpath:", "");
-			return SendHtml.class.getResource(location);
+			return MailSender.class.getResource(location);
 		} else {
 			URL attachmentUrl = new URL(attachment);
 

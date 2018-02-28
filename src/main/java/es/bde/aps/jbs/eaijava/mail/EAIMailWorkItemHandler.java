@@ -40,7 +40,7 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 		try {
 
 			Email email = createEmail(reference, workItem);
-			SendHtml.sendHtml(email);
+			MailSender.sendMail(email);
 
 			logger.info(Messages.getString("eaijava.messageMailSendedCorrectly", reference));
 			if (manager != null)

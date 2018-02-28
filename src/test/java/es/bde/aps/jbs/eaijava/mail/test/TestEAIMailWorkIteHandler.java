@@ -27,8 +27,8 @@ public class TestEAIMailWorkIteHandler {
 		TestWorkItemManager manager = new TestWorkItemManager();
 
 		WorkItemImpl workItem = createWorkItem("testEmailCorrect");
-		workItem.setParameter(EAIConstants.MAIL_FROM, "pendolero@gmail.com");
-		workItem.setParameter(EAIConstants.MAIL_TO, "pendolero@gmail.com");
+		workItem.setParameter(EAIConstants.MAIL_FROM, "qinrpbx@correo.interno");
+		workItem.setParameter(EAIConstants.MAIL_TO, "qinrpbx@correo.interno");
 
 		workItem.setParameter(EAIConstants.MAIL_SUBJECT, "Prueba");
 		workItem.setParameter(EAIConstants.MAIL_BODY, "Prueba");

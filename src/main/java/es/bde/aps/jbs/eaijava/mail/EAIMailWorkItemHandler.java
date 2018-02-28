@@ -1,5 +1,6 @@
 package es.bde.aps.jbs.eaijava.mail;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.kie.api.runtime.process.WorkItem;
@@ -18,7 +19,8 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.kie.api.runtime.process.WorkItemHandler#abortWorkItem(org.kie.api.
+	 * @see
+	 * org.kie.api.runtime.process.WorkItemHandler#abortWorkItem(org.kie.api.
 	 * runtime.process.WorkItem, org.kie.api.runtime.process.WorkItemManager)
 	 */
 	public void abortWorkItem(WorkItem workItem, WorkItemManager manager) {
@@ -28,12 +30,13 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.kie.api.runtime.process.WorkItemHandler#executeWorkItem(org.kie.api.
+	 * @see
+	 * org.kie.api.runtime.process.WorkItemHandler#executeWorkItem(org.kie.api.
 	 * runtime.process.WorkItem, org.kie.api.runtime.process.WorkItemManager)
 	 */
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
 
-		Map<String, Object> results = null;
+		Map<String, Object> results = new HashMap<String, Object>();
 		String reference = String.valueOf(workItem.getProcessInstanceId());
 
 		logger.info(Messages.getString("eaijava.messageExecuteMail", reference));
@@ -41,13 +44,16 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 
 			Email email = createEmail(reference, workItem);
 			MailSender.sendMail(email);
+			results.put("Result", "Ok");
 
 			logger.info(Messages.getString("eaijava.messageMailSendedCorrectly", reference));
-			if (manager != null)
-				manager.completeWorkItem(workItem.getId(), results);
-
 		} catch (Exception e) {
 			logger.error(Messages.getString("eaijava.errorExecuteMail", new String[] { e.getMessage() }), e);
+			results.put("Result", e.getMessage());
+
+		} finally {
+			if (manager != null)
+				manager.completeWorkItem(workItem.getId(), results);
 
 		}
 

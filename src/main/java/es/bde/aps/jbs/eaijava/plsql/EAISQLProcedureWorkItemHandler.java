@@ -101,6 +101,9 @@ public class EAISQLProcedureWorkItemHandler implements WorkItemHandler {
 
 	}
 
+	/**
+	 * 
+	 */
 	private void checkClassLoader() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String nameClass = "oracle.jdbc.pool.OracleDataSource";

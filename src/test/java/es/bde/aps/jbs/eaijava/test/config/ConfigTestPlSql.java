@@ -1,13 +1,12 @@
-package es.bde.aps.jbs.eaijava.plsql.test.config;
+package es.bde.aps.jbs.eaijava.test.config;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import es.bde.aps.jbs.eaijava.interfaces.IField;
 
-public class ConfigTest {
+public class ConfigTestPlSql extends ConfigTestAbstract {
 
-	private String name;
 	private String procedure;
 	private List<IField> parametersInput;
 	private List<IField> parametersOutput;
@@ -77,23 +76,9 @@ public class ConfigTest {
 		this.procedure = procedure;
 	}
 
-	/**
-	 * @return
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * @param name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	@Override
 	public String toString() {
-		return "ConfigTest [name=" + name + ", procedure=" + procedure + "]";
+		return "ConfigTest [name=" + getName() + ", procedure=" + procedure + "]";
 	}
 
 	/**

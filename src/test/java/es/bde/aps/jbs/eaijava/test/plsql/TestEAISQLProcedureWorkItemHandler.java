@@ -1,4 +1,4 @@
-package es.bde.aps.jbs.eaijava.plsql.test;
+package es.bde.aps.jbs.eaijava.test.plsql;
 
 import java.util.List;
 import java.util.Map;
@@ -9,16 +9,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.bde.aps.jbs.eaijava.EAIConstants;
-import es.bde.aps.jbs.eaijava.TestWorkItemManager;
 import es.bde.aps.jbs.eaijava.interfaces.Field;
 import es.bde.aps.jbs.eaijava.interfaces.IField;
 import es.bde.aps.jbs.eaijava.plsql.EAISQLProcedureWorkItemHandler;
-import es.bde.aps.jbs.eaijava.plsql.test.config.ConfigTest;
-import es.bde.aps.jbs.eaijava.plsql.test.config.Configuration;
+import es.bde.aps.jbs.eaijava.test.TestWorkItemManager;
+import es.bde.aps.jbs.eaijava.test.config.ConfigTestPlSql;
+import es.bde.aps.jbs.eaijava.test.config.ConfigType;
+import es.bde.aps.jbs.eaijava.test.config.ConfigurationFactory;
+import es.bde.aps.jbs.eaijava.test.config.ConfigurationTestPlSql;
 
 public class TestEAISQLProcedureWorkItemHandler {
 
-	private Configuration configuration;
+	private ConfigurationTestPlSql configuration;
 	private long id;
 
 	/**
@@ -28,7 +30,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 	 * @return
 	 */
 	private boolean isResultCorrect(String testName, Map<String, Object> result) {
-		ConfigTest configTest = configuration.getConfigTest(testName);
+		ConfigTestPlSql configTest = configuration.getConfigTest(testName);
 		List<String> resultExpected = configTest.getResults();
 		List<IField> parametersOutput = configTest.getParametersOutput();
 		IField field = parametersOutput.get(0);
@@ -48,7 +50,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 	 * @return
 	 */
 	private WorkItemImpl createWorkItem(String testName) {
-		ConfigTest configTest = configuration.getConfigTest(testName);
+		ConfigTestPlSql configTest = configuration.getConfigTest(testName);
 		String procedureName = configTest.getProcedure();
 		WorkItemImpl workItem = new WorkItemImpl();
 		workItem.setParameter(EAIConstants.PARAM_PROCEDURE, procedureName);
@@ -92,7 +94,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		String directory = System.getProperty("user.dir");
 		System.setProperty(EAIConstants.PROP_JBOSS_CONFIG_DIR, directory + "/src/test/resources");
 		try {
-			configuration = Configuration.getInstance();
+			configuration = (ConfigurationTestPlSql) ConfigurationFactory.getConfiguration(ConfigType.CONFIG_PL_SQL);
 		} catch (Exception e) {
 			String message = "Error al cargar la configuraci�n [" + e.getMessage() + "]";
 			Assert.assertNotNull(message, null);

@@ -1,4 +1,4 @@
-package es.bde.aps.jbs.eaijava;
+package es.bde.aps.jbs.eaijava.test;
 
 import java.util.HashMap;
 import java.util.Map;

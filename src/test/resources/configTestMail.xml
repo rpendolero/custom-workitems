@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<tests>
+		<test name="testExecuteMailCorrect">
+			<parameters>
+				<parameter name="From" value=""/>
+				<parameter name="To" value="qinrpbx@correo.interno"/>
+				<parameter name="Subject" value="Mensaje de Prueba"/>
+				<parameter name="Body" value="Este es un mensaje de prueba"/>
+			</parameters>
+			<result>
+				
+			</result>
+		</test>
+	</tests>
+
+</configuration>

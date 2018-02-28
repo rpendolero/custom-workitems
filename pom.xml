@@ -51,8 +51,15 @@
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
+			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-workitems</artifactId>
+			<version>6.5.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<packaging>jar</packaging>
 </project>

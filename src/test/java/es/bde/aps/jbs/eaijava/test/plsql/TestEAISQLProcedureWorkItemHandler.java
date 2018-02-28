@@ -1,5 +1,7 @@
 package es.bde.aps.jbs.eaijava.test.plsql;
 
+import java.io.Serializable;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -7,20 +9,24 @@ import org.drools.core.process.instance.impl.WorkItemImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.kie.api.runtime.KieSession;
 
 import es.bde.aps.jbs.eaijava.EAIConstants;
 import es.bde.aps.jbs.eaijava.interfaces.Field;
 import es.bde.aps.jbs.eaijava.interfaces.IField;
 import es.bde.aps.jbs.eaijava.plsql.EAISQLProcedureWorkItemHandler;
+import es.bde.aps.jbs.eaijava.test.TestKieSession;
 import es.bde.aps.jbs.eaijava.test.TestWorkItemManager;
 import es.bde.aps.jbs.eaijava.test.config.ConfigTestPlSql;
 import es.bde.aps.jbs.eaijava.test.config.ConfigType;
 import es.bde.aps.jbs.eaijava.test.config.ConfigurationFactory;
 import es.bde.aps.jbs.eaijava.test.config.ConfigurationTestPlSql;
+import es.bde.aps.jbs.eaijava.util.ConvertUtil;
 
 public class TestEAISQLProcedureWorkItemHandler {
 
 	private ConfigurationTestPlSql configuration;
+	private KieSession ksession;
 	private long id;
 
 	/**
@@ -69,13 +75,52 @@ public class TestEAISQLProcedureWorkItemHandler {
 	/**
 	 * 
 	 * @param testName
+	 * @return
+	 * @throws ParseException 
+	 */
+	private KieSession createKieSession(String testName) throws ParseException {
+		ConfigTestPlSql configTest = configuration.getConfigTest(testName);
+		ksession = new TestKieSession();
+
+		List<IField> parametersInput = configTest.getParametersInput();
+		for (IField field : parametersInput) {
+			setVariable(ksession, field);
+		}
+		
+		List<IField> parametersOuput = configTest.getParametersOutput();
+		for (IField field : parametersOuput) {
+			setVariable(ksession, field);
+		}
+		return ksession;
+	}
+	
+	/**
+	 * 
+	 * @param ksession2
+	 * @param field
+	 * @throws ParseException 
+	 */
+	private void setVariable(KieSession ksession, IField field) throws ParseException {
+		if (field instanceof Field) {
+			char type = field.getType();
+			Serializable obj = (Serializable) field.getValue();
+			Object objectJava = ConvertUtil.getObjectJava(type, obj);
+			ksession.setGlobal(field.getName(), objectJava);
+		} else {
+			
+		}
+	}
+
+	/**
+	 * 
+	 * @param testName
 	 */
 	private void verifyTestOutput(String testName) {
 		TestWorkItemManager manager = new TestWorkItemManager();
 
 		WorkItemImpl workItem = createWorkItem(testName);
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler(ksession);
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();
@@ -107,7 +152,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureVoid");
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler(ksession);
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();
@@ -120,7 +165,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureVarcharIn");
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler(ksession);
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();
@@ -147,7 +192,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureIntegerIn");
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler(ksession);
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();
@@ -174,7 +219,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDoubleIn");
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler(ksession);
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();
@@ -200,7 +245,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateIn");
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler(ksession);
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();
@@ -226,7 +271,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateTimeIn");
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler(ksession);
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();
@@ -253,7 +298,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureTimeIn");
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler(ksession);
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();
@@ -279,7 +324,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayVarcharIn");
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler(ksession);
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();
@@ -305,7 +350,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayIntegerIn");
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler(ksession);
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();
@@ -331,7 +376,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayDoubleIn");
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler(ksession);
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();
@@ -357,7 +402,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayDateIn");
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler(ksession);
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();
@@ -383,7 +428,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayDateTimeIn");
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler(ksession);
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();
@@ -409,7 +454,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayTimeIn");
 
-		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler();
+		EAISQLProcedureWorkItemHandler workItemHandler = new EAISQLProcedureWorkItemHandler(ksession);
 		workItemHandler.executeWorkItem(workItem, manager);
 
 		long id = workItem.getId();

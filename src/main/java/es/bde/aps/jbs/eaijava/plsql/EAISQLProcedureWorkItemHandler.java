@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.jbpm.process.workitem.AbstractLogOrThrowWorkItemHandler;
+import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.process.WorkItem;
-import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.runtime.process.WorkItemManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +23,15 @@ import es.bde.aps.jbs.eaijava.util.ClassSearchUtils;
  * @author roberto
  *
  */
-public class EAISQLProcedureWorkItemHandler implements WorkItemHandler {
+public class EAISQLProcedureWorkItemHandler extends AbstractLogOrThrowWorkItemHandler {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private ConnectionPool pool;
+	private KieSession ksession;
 
+	public EAISQLProcedureWorkItemHandler(KieSession ksession) {
+		this.ksession = ksession;
+	}
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -6,7 +6,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,14 +71,14 @@ public class EAISQLControlDAO {
 
 		String sql = generateSql(procedure, inputFields, outputFields);
 
-		logger.info(Messages.getString("eaijava.messageExecuteSql", new String[] { reference, procedure, inputFields.toString(), outputFields.toString() }));
+		logger.info(Messages.getString("eaijava.messageExecuteSql",  reference, procedure, inputFields.toString(), outputFields.toString() ));
 		OracleCallableStatement stmt = null;
 		try {
 			stmt = (OracleCallableStatement) connection.prepareCall(sql);
 			registerParameters(stmt, inputFields, outputFields);
 			stmt.execute();
 			Map<String, Object> response = getParametersOut(stmt, inputFields, outputFields);
-			logger.info(Messages.getString("eaijava.messageExecuteSqlResponse", new String[] { reference, procedure, response.toString() }));
+			logger.info(Messages.getString("eaijava.messageExecuteSqlResponse", reference, procedure, response.toString() ));
 			return response;
 
 		} catch (SQLException e) {
@@ -126,8 +125,6 @@ public class EAISQLControlDAO {
 	 * @throws EAIJavaException
 	 */
 	private int setInputParameters(CallableStatement stmt, List<Object> inputFields, int numFields) throws EAIJavaException {
-		boolean isArray = false;
-		List<Object> valoresArray = new ArrayList<Object>();
 
 		for (int i = 0; i < inputFields.size(); i++) {
 			IField field = (IField) inputFields.get(i);
@@ -159,19 +156,19 @@ public class EAISQLControlDAO {
 	 */
 	private void setInputParameterArray(CallableStatement stmt, IField field, int posicion) throws Exception {
 		String name = field.getName();
-
-		List<Object> valoresArray = (List<Object>) field.getValue();
 		String type = ConvertUtil.getTypeArraySQL(field);
 
 		logger.info(Messages.getString("eaijava.messageRegisteringInputParameters", new String[] { name, type }));
 
+		@SuppressWarnings("unchecked")
+		List<Object> valoresArray = (List<Object>) field.getValue();
 		Object[] values = valoresArray.toArray(new Object[valoresArray.size()]);
 		values = (Object[]) ConvertUtil.getObjectSQL(field.getType(), valoresArray);
 
 		ArrayDescriptor descriptor = ArrayDescriptor.createDescriptor(type, connection);
-		ARRAY ar = new ARRAY(descriptor, connection, values);
+		ARRAY array = new ARRAY(descriptor, connection, values);
 
-		stmt.setArray(posicion, ar);
+		stmt.setArray(posicion, array);
 		logger.info(Messages.getString("eaijava.messageRegisteredInputParameters", new String[] { name }));
 	}
 

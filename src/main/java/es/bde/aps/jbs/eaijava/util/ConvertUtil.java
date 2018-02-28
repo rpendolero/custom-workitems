@@ -7,7 +7,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,7 +44,6 @@ public class ConvertUtil {
 	// "DateTime"
 	private static SimpleDateFormat oDateTimeFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-	private static DecimalFormat oDecimalFormat = new DecimalFormat("#.#");
 
 	/**
 	 * M�todo que devuelve el valor de un objeto Field en el formato
@@ -110,7 +108,7 @@ public class ConvertUtil {
 		if (obj == null)
 			return "";
 
-		String value = null;
+		Object value = null;
 		switch (type) {
 		case IField.STRING:
 			// Tipo Texto
@@ -120,13 +118,15 @@ public class ConvertUtil {
 			// Tipo Fecha
 			if (obj instanceof Timestamp) {
 				long time = ((Timestamp) obj).getTime();
-				value = oDateFormat.format(new java.util.Date(time));
+				value = new java.util.Date(time);
 			} else {
 				if (obj instanceof Date) {
-					value = oDateFormat.format((Date) obj);
+					long time = ((Date) obj).getTime();
+					value = new java.util.Date(time);
 
 				} else {
-					value = obj.toString();
+					if (obj instanceof String)
+						value = oDateFormat.parse((String) obj);
 				}
 			}
 
@@ -135,17 +135,15 @@ public class ConvertUtil {
 			// Tipo Hora
 			if (obj instanceof Timestamp) {
 				long time = ((Timestamp) obj).getTime();
-				value = oTimeFormat.format(new java.util.Date(time));
+				value = new java.util.Date(time);
 			} else {
 				if (obj instanceof Date) {
-					value = oTimeFormat.format((Date) obj);
+					long time = ((Date) obj).getTime();
+					value = new java.util.Date(time);
 
 				} else {
-					if (obj instanceof Time) {
-						long time = ((Time) obj).getTime();
-						value = oTimeFormat.format(new java.util.Date(time));
-					} else {
-						value = obj.toString();
+					if (obj instanceof String) {
+						value = oTimeFormat.parse((String) obj);
 					}
 				}
 			}
@@ -155,13 +153,16 @@ public class ConvertUtil {
 			// Tipo Timestamp
 			if (obj instanceof Timestamp) {
 				long time = ((Timestamp) obj).getTime();
-				value = oDateTimeFormat.format(new java.util.Date(time));
+				value = new java.util.Date(time);
 			} else {
 				if (obj instanceof Date) {
-					value = oDateTimeFormat.format((Date) obj);
+					long time = ((Date) obj).getTime();
+					value = new java.util.Date(time);
 
 				} else {
-					value = obj.toString();
+					if (obj instanceof String) {
+						value = oDateTimeFormat.parse((String) obj);
+					}
 				}
 			}
 			break;

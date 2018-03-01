@@ -8,7 +8,7 @@ import es.bde.aps.jbs.workitem.exception.JBSException;
 public class Properties {
 
 	// Referencia del objeto de propiedades
-	private static java.util.Properties properties;
+	private java.util.Properties properties;
 
 	/**
 	 * 
@@ -26,7 +26,7 @@ public class Properties {
 	 * @throws Exception
 	 *             Si la propiedad no existe.
 	 */
-	public static String getString(String propertyName) throws JBSException {
+	public String getString(String propertyName) throws JBSException {
 		return checkProperty(propertyName);
 	}
 
@@ -39,7 +39,7 @@ public class Properties {
 	 * @throws Exception
 	 *             Si la propiedad no existe o si est� mal formada.
 	 */
-	public static int getInt(String propertyName) throws JBSException {
+	public int getInt(String propertyName) throws JBSException {
 		String property = checkProperty(propertyName);
 
 		try {
@@ -59,7 +59,7 @@ public class Properties {
 	 * @throws Exception
 	 *             Si la propiedad es nula o vacia.
 	 */
-	private static String checkProperty(String propertyName) throws JBSException {
+	private String checkProperty(String propertyName) throws JBSException {
 		String propertyValue = (String) getProperty(propertyName);
 
 		if ((propertyValue == null) || (propertyValue.length() == 0)) {
@@ -80,7 +80,7 @@ public class Properties {
 	 * @throws Exception
 	 *             Si la propiedad es nula o vacia.
 	 */
-	public static boolean getBoolean(String propertyName) throws JBSException {
+	public boolean getBoolean(String propertyName) throws JBSException {
 		String propertyValue = checkProperty(propertyName);
 
 		return new Boolean(propertyValue).booleanValue();
@@ -94,7 +94,7 @@ public class Properties {
 	 * @return
 	 * @throws JBSException
 	 */
-	public static Object getProperty(String key) throws JBSException {
+	public Object getProperty(String key) throws JBSException {
 		return properties.get(key);
 	}
 

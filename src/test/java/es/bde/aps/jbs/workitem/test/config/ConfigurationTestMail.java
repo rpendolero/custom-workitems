@@ -42,4 +42,13 @@ public class ConfigurationTestMail extends ConfigurationAbstract {
 		return new Handler();
 	}
 
+	/**
+	 * 
+	 * @param testName
+	 * @return
+	 */
+	public ConfigTestMail getConfigTest(String testName) {
+		return (ConfigTestMail) handler.getMapTest().get(testName);
+	}
+
 }

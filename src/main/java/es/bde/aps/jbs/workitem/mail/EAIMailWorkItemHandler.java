@@ -95,6 +95,10 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 		// Fill message
 		message.setRecipients(recipients);
 		parameter = (String) workItem.getParameter(EAIConstants.MAIL_FROM);
+		if (parameter == null || "".equals(parameter)) {
+			String error = Messages.getString("eaijava.errorMailFromNotFound", EAIConstants.MAIL_FROM);
+			throw new JBSException(error);
+		}
 		message.setFrom(parameter);
 		logger.info(Messages.getString("eaijava.messageAddressFrom", reference, parameter));
 		parameter = (String) workItem.getParameter(EAIConstants.MAIL_SUBJECT);
@@ -166,7 +170,7 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 			}
 
 		} catch (Exception e) {
-			logger.error(Messages.getString("eaijava.errorMailFindUsersOfGroup", new String[] { fieldMailToGroup, e.getMessage() }));
+			logger.error(Messages.getString("eaijava.errorMailFindUsersOfGroup", fieldMailToGroup, e.getMessage()));
 
 		} finally {
 			if (conex != null && pool != null) {

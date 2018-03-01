@@ -8,6 +8,7 @@ import org.junit.Test;
 import es.bde.aps.jbs.workitem.EAIConstants;
 import es.bde.aps.jbs.workitem.mail.EAIMailWorkItemHandler;
 import es.bde.aps.jbs.workitem.test.TestWorkItemManager;
+import es.bde.aps.jbs.workitem.test.config.ConfigTestMail;
 import es.bde.aps.jbs.workitem.test.config.ConfigType;
 import es.bde.aps.jbs.workitem.test.config.ConfigurationFactory;
 import es.bde.aps.jbs.workitem.test.config.ConfigurationTestMail;
@@ -35,15 +36,35 @@ public class TestEAIMailWorkIteHandler {
 	}
 
 	@Test
-	public void testEmailCorrect() {
+	public void testExecuteMailCorrect() {
 		TestWorkItemManager manager = new TestWorkItemManager();
+		String testName = "testExecuteMailCorrect";
 
-		WorkItemImpl workItem = createWorkItem("testEmailCorrect");
-		workItem.setParameter(EAIConstants.MAIL_FROM, "qinrpbx@correo.interno");
-		workItem.setParameter(EAIConstants.MAIL_TO, "qinrpbx@correo.interno");
+		WorkItemImpl workItem = createWorkItem(testName);
+		ConfigTestMail configTest = configuration.getConfigTest(testName);
 
-		workItem.setParameter(EAIConstants.MAIL_SUBJECT, "Prueba");
-		workItem.setParameter(EAIConstants.MAIL_BODY, "Prueba");
+		workItem.setParameter(EAIConstants.MAIL_FROM, configTest.getParameter(EAIConstants.MAIL_FROM));
+		workItem.setParameter(EAIConstants.MAIL_TO, configTest.getParameter(EAIConstants.MAIL_TO));
+		workItem.setParameter(EAIConstants.MAIL_SUBJECT, configTest.getParameter(EAIConstants.MAIL_SUBJECT));
+		workItem.setParameter(EAIConstants.MAIL_BODY, configTest.getParameter(EAIConstants.MAIL_BODY));
+
+		EAIMailWorkItemHandler workItemHandler = new EAIMailWorkItemHandler();
+		workItemHandler.executeWorkItem(workItem, manager);
+	}
+
+	@Test
+	public void testExecuteMailGroupCorrect() {
+		TestWorkItemManager manager = new TestWorkItemManager();
+		String testName = "testExecuteMailGroupCorrect";
+
+		WorkItemImpl workItem = createWorkItem(testName);
+		ConfigTestMail configTest = configuration.getConfigTest(testName);
+
+		workItem.setParameter(EAIConstants.MAIL_FROM, configTest.getParameter(EAIConstants.MAIL_FROM));
+		workItem.setParameter(EAIConstants.MAIL_TO_GROUP, configTest.getParameter(EAIConstants.MAIL_TO_GROUP));
+		workItem.setParameter(EAIConstants.MAIL_SUBJECT, configTest.getParameter(EAIConstants.MAIL_SUBJECT));
+		workItem.setParameter(EAIConstants.MAIL_BODY, configTest.getParameter(EAIConstants.MAIL_BODY));
+
 		EAIMailWorkItemHandler workItemHandler = new EAIMailWorkItemHandler();
 		workItemHandler.executeWorkItem(workItem, manager);
 	}

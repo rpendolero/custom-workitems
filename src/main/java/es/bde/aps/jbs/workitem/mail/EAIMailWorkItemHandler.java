@@ -1,8 +1,12 @@
 package es.bde.aps.jbs.workitem.mail;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.pool.impl.GenericObjectPool;
 import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.runtime.process.WorkItemManager;
@@ -12,6 +16,9 @@ import org.slf4j.LoggerFactory;
 import es.bde.aps.jbs.workitem.EAIConstants;
 import es.bde.aps.jbs.workitem.Messages;
 import es.bde.aps.jbs.workitem.exception.JBSException;
+import es.bde.aps.jbs.workitem.pool.ConnectionPoolFactory;
+import es.bde.aps.jbs.workitem.util.Properties;
+import es.bde.aps.jbs.workitem.util.PropertiesFactory;
 
 public class EAIMailWorkItemHandler implements WorkItemHandler {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -19,8 +26,7 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.kie.api.runtime.process.WorkItemHandler#abortWorkItem(org.kie.api.
+	 * @see org.kie.api.runtime.process.WorkItemHandler#abortWorkItem(org.kie.api.
 	 * runtime.process.WorkItem, org.kie.api.runtime.process.WorkItemManager)
 	 */
 	public void abortWorkItem(WorkItem workItem, WorkItemManager manager) {
@@ -30,8 +36,7 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.kie.api.runtime.process.WorkItemHandler#executeWorkItem(org.kie.api.
+	 * @see org.kie.api.runtime.process.WorkItemHandler#executeWorkItem(org.kie.api.
 	 * runtime.process.WorkItem, org.kie.api.runtime.process.WorkItemManager)
 	 */
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
@@ -134,7 +139,47 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 	 * @throws JBSException
 	 */
 	private String findUsersOfGroups(String fieldMailToGroup) throws JBSException {
-		return null;
+		String[] aGroups = fieldMailToGroup.split(EAIConstants.SEPARATOR);
+
+		GenericObjectPool pool = null;
+		Connection conex = null;
+		StringBuffer strUsers = new StringBuffer();
+		try {
+
+			pool = ConnectionPoolFactory.getPool(EAIConstants.POOL_JBS);
+			conex = (Connection) pool.borrowObject();
+
+			Properties properties = PropertiesFactory.getProperties(EAIConstants.PROPERTIES_MAIL);
+			String sqlUsersGroup = properties.getString(EAIConstants.PROP_SQL_USERS_GROUP);
+			for (int i = 0; i < aGroups.length; i++) {
+				String group = aGroups[i];
+				logger.debug(Messages.getString("eaijava.messageMailFindUsersOfGroup", sqlUsersGroup));
+
+				PreparedStatement pstmt = conex.prepareStatement(sqlUsersGroup);
+				pstmt.setString(1, group);
+
+				ResultSet rs = pstmt.executeQuery();
+				while (rs.next()) {
+					strUsers.append(rs.getString(1)).append(EAIConstants.MAIL_DOMAIN_NEW).append(";");
+				}
+
+			}
+
+		} catch (Exception e) {
+			logger.error(Messages.getString("eaijava.errorMailFindUsersOfGroup", new String[] { fieldMailToGroup, e.getMessage() }));
+
+		} finally {
+			if (conex != null && pool != null) {
+				try {
+					pool.returnObject(conex);
+				} catch (Exception e1) {
+					// TODO Bloque catch generado automáticamente
+					e1.printStackTrace();
+				}
+			}
+		}
+
+		return strUsers.toString();
 	}
 
 	/**

@@ -32,7 +32,7 @@ public class EAIConstants {
 
 	public static final String MAIL_FROM = "From";
 	public static final String MAIL_TO = "To";
-	public static final String MAIL_TO_GROUP = "To group";
+	public static final String MAIL_TO_GROUP = "To Group";
 	public static final String MAIL_CC = "Cc";
 	public static final String MAIL_CCO = "Cco";
 	public static final String MAIL_SUBJECT = "Subject";
@@ -44,8 +44,8 @@ public class EAIConstants {
 	public static final String PROP_SERVER_MAIL = "mail.smtp.host";
 	public static final String PROP_SMTP_USER = "mail.smtp.user";
 	public static final String PROP_SMTP_PWD = "mail.smtp.password";
-	public static final String PROP_PROTOCOL_MAIL = "eaijava.protocol";
-	public static final String PROP_SQL_USERS_GROUP = "eaijava.sql.users.group";
+	public static final String PROP_PROTOCOL_MAIL = "mail.smtp.protocol";
+	public static final String PROP_SQL_USERS_GROUP = "mail.sql.users.group";
 
 	public static final String MAIL_DOMAIN_OLD = "@outlook";
 	public static final String MAIL_DOMAIN_NEW = "@correo.interno";
@@ -59,5 +59,7 @@ public class EAIConstants {
 	public static final String PARAM_LIST_IN = "Input Fields";
 	public static final String PARAM_LIST_OUT = "Output Fields";
 	public static final String PARAM_LIST_FIELDS = "List Fields";
+
+	public static final String POOL_JBS = "jbs";
 
 }

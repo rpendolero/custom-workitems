@@ -31,12 +31,13 @@ public class EAISQLProcedureWorkItemHandler extends AbstractLogOrThrowWorkItemHa
 
 	public EAISQLProcedureWorkItemHandler(KieSession ksession) {
 		this.ksession = ksession;
+
 	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.kie.api.runtime.process.WorkItemHandler#abortWorkItem(org.kie.api.
+	 * @see org.kie.api.runtime.process.WorkItemHandler#abortWorkItem(org.kie.api.
 	 * runtime .process.WorkItem, org.kie.api.runtime.process.WorkItemManager)
 	 */
 	public void abortWorkItem(WorkItem workItem, WorkItemManager manager) {
@@ -47,8 +48,7 @@ public class EAISQLProcedureWorkItemHandler extends AbstractLogOrThrowWorkItemHa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.kie.api.runtime.process.WorkItemHandler#executeWorkItem(org.kie.api.
+	 * @see org.kie.api.runtime.process.WorkItemHandler#executeWorkItem(org.kie.api.
 	 * runtime.process.WorkItem, org.kie.api.runtime.process.WorkItemManager)
 	 */
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {

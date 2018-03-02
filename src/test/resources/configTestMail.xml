@@ -5,16 +5,16 @@
 			<parameters>
 				<parameter name="From" value="user@correo.interno"/>
 				<parameter name="To" value="qinrpbx@correo.interno"/>
-				<parameter name="Subject" value="Mensaje de Prueba"/>
-				<parameter name="Body" value="Este es un mensaje de prueba"/>
+				<parameter name="Subject" value="testExecuteMailCorrect"/>
+				<parameter name="Body" value="Este es un mensaje de prueba del test testExecuteMailCorrect"/>
 			</parameters>
 		</test>
 		<test name="testExecuteMailGroupCorrect">
 			<parameters>
 				<parameter name="From" value="user@correo.interno"/>
-				<parameter name="To Group" value="TSTGROUP"/>
-				<parameter name="Subject" value="Mensaje de Prueba"/>
-				<parameter name="Body" value="Este es un mensaje de prueba"/>
+				<parameter name="To Group" value="TSTGROUPTEST"/>
+				<parameter name="Subject" value="testExecuteMailGroupCorrect"/>
+				<parameter name="Body" value="Este es un mensaje de prueba del test testExecuteMailGroupCorrect"/>
 			</parameters>
 		</test>
 

@@ -11,7 +11,7 @@ import org.kie.api.runtime.process.WorkflowProcessInstance;
 import es.bde.aps.jbs.workitem.exception.JBSException;
 import es.bde.aps.jbs.workitem.util.ProcessContextFactory;
 
-public class InitilizerProcessInstanceWorkItemHandler extends AbstractLogOrThrowWorkItemHandler {
+public class InitializerProcessInstanceWorkItemHandler extends AbstractLogOrThrowWorkItemHandler {
 
 	private static final String VAR_CASENUM = "SW_CASENUM";
 	private static final String VAR_PROCNAME = "SW_PRONAME";
@@ -19,7 +19,7 @@ public class InitilizerProcessInstanceWorkItemHandler extends AbstractLogOrThrow
 
 	private KieSession ksession;
 
-	public InitilizerProcessInstanceWorkItemHandler(KieSession ksession) {
+	public InitializerProcessInstanceWorkItemHandler(KieSession ksession) {
 		this.ksession = ksession;
 	}
 

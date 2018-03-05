@@ -8,7 +8,6 @@ import java.util.Map;
 import org.drools.core.process.instance.impl.WorkItemImpl;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 import org.kie.api.runtime.KieSession;
 
 import es.bde.aps.jbs.workitem.EAIConstants;
@@ -147,7 +146,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		}
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureVoid() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 
@@ -161,7 +160,7 @@ public class TestEAISQLProcedureWorkItemHandler {
 		Assert.assertTrue(result != null);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureVarcharIn() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureVarcharIn");
@@ -175,20 +174,20 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureVarcharOut() {
 		String testName = "testExecuteProcedureVarcharOut";
 		verifyTestOutput(testName);
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureVarcharInOut() {
 		String testName = "testExecuteProcedureVarcharInOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureIntegerIn() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureIntegerIn");
@@ -202,20 +201,20 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureIntegerOut() {
 		String testName = "testExecuteProcedureIntegerOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureIntegerInOut() {
 		String testName = "testExecuteProcedureIntegerInOut";
 		verifyTestOutput(testName);
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureDoubleIn() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDoubleIn");
@@ -229,19 +228,19 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureDoubleOut() {
 		String testName = "testExecuteProcedureDoubleOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureDoubleInOut() {
 		String testName = "testExecuteProcedureDoubleInOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureDateIn() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateIn");
@@ -255,19 +254,19 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureDateOut() {
 		String testName = "testExecuteProcedureDateOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureDateInOut() {
 		String testName = "testExecuteProcedureDateInOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureDateTimeIn() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureDateTimeIn");
@@ -281,19 +280,19 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureDateTimeOut() {
 		String testName = "testExecuteProcedureDateTimeOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureDateTimeInOut() {
 		String testName = "testExecuteProcedureDateTimeInOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureTimeIn() {
 
 		TestWorkItemManager manager = new TestWorkItemManager();
@@ -308,19 +307,19 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureTimeOut() {
 		String testName = "testExecuteProcedureTimeOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureTimeInOut() {
 		String testName = "testExecuteProcedureTimeInOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayVarcharIn() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayVarcharIn");
@@ -334,19 +333,19 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayVarcharOut() {
 		String testName = "testExecuteProcedureArrayVarcharOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayVarcharInOut() {
 		String testName = "testExecuteProcedureArrayVarcharInOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayIntegerIn() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayIntegerIn");
@@ -360,19 +359,19 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayIntegerOut() {
 		String testName = "testExecuteProcedureArrayIntegerOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayIntegerInOut() {
 		String testName = "testExecuteProcedureArrayIntegerInOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayDoubleIn() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayDoubleIn");
@@ -386,19 +385,19 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayDoubleOut() {
 		String testName = "testExecuteProcedureArrayDoubleOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayDoubleInOut() {
 		String testName = "testExecuteProcedureArrayDoubleInOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayDateIn() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayDateIn");
@@ -412,19 +411,19 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayDateOut() {
 		String testName = "testExecuteProcedureArrayDateOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayDateInOut() {
 		String testName = "testExecuteProcedureArrayDateInOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayDateTimeIn() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayDateTimeIn");
@@ -438,19 +437,19 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayDateTimeOut() {
 		String testName = "testExecuteProcedureArrayDateTimeOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayDateTimeInOut() {
 		String testName = "testExecuteProcedureArrayDateTimeInOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayTimeIn() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		WorkItemImpl workItem = createWorkItem("testExecuteProcedureArrayTimeIn");
@@ -464,13 +463,13 @@ public class TestEAISQLProcedureWorkItemHandler {
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayTimeOut() {
 		String testName = "testExecuteProcedureArrayTimeOut";
 		verifyTestOutput(testName);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteProcedureArrayTimeInOut() {
 		String testName = "testExecuteProcedureArrayTimeInOut";
 		verifyTestOutput(testName);

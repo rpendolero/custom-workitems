@@ -61,7 +61,8 @@ public class InitializerProcessInstanceWorkItemHandler extends AbstractLogOrThro
 			default:
 				break;
 			}
-			logger.info("Inicializdas las variables del caso [" + processInstanceId + "] correctamente.");
+			logger.info("Inicializadas las variables del caso [" + processInstanceId + "] correctamente.");
+			manager.completeWorkItem(workItem.getId(), null);
 		} catch (Exception e) {
 			logger.error("Error al inicializar las variables del caso [" + processInstanceId + "] [" + e.getMessage() + "]");
 			handleException(e);

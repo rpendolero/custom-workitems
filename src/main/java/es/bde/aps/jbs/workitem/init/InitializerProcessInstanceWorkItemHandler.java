@@ -7,11 +7,15 @@ import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemManager;
 import org.kie.api.runtime.process.WorkflowProcessInstance;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.bde.aps.jbs.workitem.exception.JBSException;
 import es.bde.aps.jbs.workitem.util.ProcessContextFactory;
 
 public class InitializerProcessInstanceWorkItemHandler extends AbstractLogOrThrowWorkItemHandler {
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private static final String VAR_CASENUM = "SW_CASENUM";
 	private static final String VAR_PROCNAME = "SW_PRONAME";
@@ -29,7 +33,11 @@ public class InitializerProcessInstanceWorkItemHandler extends AbstractLogOrThro
 	}
 
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
+		String processInstanceId = null;
 		try {
+			processInstanceId = String.valueOf(workItem.getProcessInstanceId());
+			logger.info("Inicializando las variables del caso [" + processInstanceId + "]");
+
 			ProcessContext kcontext = ProcessContextFactory.createProcessContext(ksession, workItem);
 			if (kcontext == null) {
 				throw new JBSException("No se pudo crear el kie context");
@@ -53,8 +61,10 @@ public class InitializerProcessInstanceWorkItemHandler extends AbstractLogOrThro
 			default:
 				break;
 			}
-
+			logger.info("Inicializadas las variables del caso [" + processInstanceId + "] correctamente.");
+			manager.completeWorkItem(workItem.getId(), null);
 		} catch (Exception e) {
+			logger.error("Error al inicializar las variables del caso [" + processInstanceId + "] [" + e.getMessage() + "]");
 			handleException(e);
 		}
 

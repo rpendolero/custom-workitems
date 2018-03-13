@@ -55,6 +55,7 @@ public class EAIConstants {
 	public static final String PARAM_EVENT_NAME = "Event Name";
 	public static final String PARAM_PROCESS_INSTANCE = "Process Instance";
 	public static final String PARAM_PROCESS_NAME = "Process Name";
+	public static final String PARAM_PROCESS_INSTANCE_ID = "Process Instance Id";
 	public static final String PARAM_PROCEDURE = "Procedure";
 	public static final String PARAM_LIST_IN = "Input Fields";
 	public static final String PARAM_LIST_OUT = "Output Fields";

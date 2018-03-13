@@ -3,7 +3,6 @@ package es.bde.aps.jbs.workitem.test.mail;
 import org.drools.core.process.instance.impl.WorkItemImpl;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 import es.bde.aps.jbs.workitem.EAIConstants;
 import es.bde.aps.jbs.workitem.mail.EAIMailWorkItemHandler;
@@ -35,7 +34,7 @@ public class TestEAIMailWorkIteHandler {
 
 	}
 
-	@Test
+	// @Test
 	public void testExecuteMailCorrect() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		String testName = "testExecuteMailCorrect";
@@ -52,7 +51,7 @@ public class TestEAIMailWorkIteHandler {
 		workItemHandler.executeWorkItem(workItem, manager);
 	}
 
-	@Test
+	// @Test
 	public void testExecuteMailGroupCorrect() {
 		TestWorkItemManager manager = new TestWorkItemManager();
 		String testName = "testExecuteMailGroupCorrect";

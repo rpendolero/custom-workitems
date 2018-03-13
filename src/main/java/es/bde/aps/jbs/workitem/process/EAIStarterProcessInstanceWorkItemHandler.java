@@ -20,8 +20,10 @@ import es.bde.aps.jbs.workitem.interfaces.IField;
 
 public class EAIStarterProcessInstanceWorkItemHandler extends AbstractLogOrThrowWorkItemHandler {
 
+	private static final String PROCESS_ID = "PROCESS_ID";
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private KieSession ksession;
+	private Map<String, Object> results = new HashMap<String, Object>();
 
 	public EAIStarterProcessInstanceWorkItemHandler(KieSession ksession) {
 		this.ksession = ksession;
@@ -46,19 +48,23 @@ public class EAIStarterProcessInstanceWorkItemHandler extends AbstractLogOrThrow
 	 */
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
 		String reference = String.valueOf(workItem.getProcessInstanceId());
+		String processName = null;
+		Map<String, Object> parameters = null;
 		try {
 			logger.info(Messages.getString("eaijava.messageExecute", reference));
-			String processName = (String) workItem.getParameter(EAIConstants.PARAM_PROCEDURE);
-			verifyProcessName(processName, workItem);
+			processName = (String) workItem.getParameter(EAIConstants.PARAM_PROCESS_NAME);
+			verifyProcessName(reference, processName, workItem);
 
-			Map<String, Object> parameters = getParameters(workItem);
+			parameters = getParameters(workItem);
 			logger.info(Messages.getString("eaijava.messageExecuteCaseStart", reference, processName, parameters.toString()));
 			ProcessInstance processInstance = ksession.startProcess(processName, parameters);
 			long processInstanceId = processInstance.getId();
 
+			results.put(PROCESS_ID, processInstance);
+			manager.completeWorkItem(workItem.getId(), results);
 			logger.info(Messages.getString("eaijava.messageExecuteCaseStartOK", reference, processInstanceId + "", processName, parameters.toString()));
 		} catch (Exception e) {
-			logger.error(Messages.getString("eaijava.errorExecute", reference, e.getMessage()));
+			logger.error(Messages.getString("eaijava.errorExecuteCaseStart", processName, parameters.toString(), e.getMessage()));
 			handleException(e);
 		}
 
@@ -85,15 +91,19 @@ public class EAIStarterProcessInstanceWorkItemHandler extends AbstractLogOrThrow
 	 * @param workItem
 	 * @throws JBSException
 	 */
-	private void verifyProcessName(String processNameTarjet, WorkItem workItem) throws JBSException {
+	private void verifyProcessName(String reference, String processNameTarjet, WorkItem workItem) throws JBSException {
+		logger.info(Messages.getString("eaijava.messageExecuteCaseVerifyProcessName", reference, processNameTarjet));
+		if (processNameTarjet == null)
+			throw new JBSException("Nombre de proceso nulo o vacio");
+
 		long processInstanceId = workItem.getProcessInstanceId();
 		ProcessInstance processInstance = ksession.getProcessInstance(processInstanceId);
 		Process process = processInstance.getProcess();
-		String processNameSource = process.getName();
+		String processNameSource = process.getId();
 		if (!processNameTarjet.substring(0, 3).equals(processNameSource.substring(0, 3))) {
-			throw new JBSException(Messages.getString("errorCaseStartInvalidProcedureName", processNameTarjet, processInstanceId + "", processNameSource));
+			throw new JBSException(Messages.getString("eaijava.errorCaseStartInvalidProcedureName", processNameTarjet, processInstanceId + "", processNameSource));
 		}
-
+		logger.info(Messages.getString("eaijava.messageExecuteCaseVerifyProcessNameOk", reference, processNameTarjet));
 	}
 
 }

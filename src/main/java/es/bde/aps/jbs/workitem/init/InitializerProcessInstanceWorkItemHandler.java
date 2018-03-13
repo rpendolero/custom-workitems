@@ -1,5 +1,8 @@
 package es.bde.aps.jbs.workitem.init;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.drools.core.spi.ProcessContext;
 import org.jbpm.process.workitem.AbstractLogOrThrowWorkItemHandler;
 import org.kie.api.runtime.KieSession;
@@ -10,10 +13,13 @@ import org.kie.api.runtime.process.WorkflowProcessInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import es.bde.aps.jbs.workitem.Messages;
 import es.bde.aps.jbs.workitem.exception.JBSException;
 import es.bde.aps.jbs.workitem.util.ProcessContextFactory;
 
 public class InitializerProcessInstanceWorkItemHandler extends AbstractLogOrThrowWorkItemHandler {
+
+	private Map<String, Object> results = new HashMap<String, Object>();
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -33,10 +39,11 @@ public class InitializerProcessInstanceWorkItemHandler extends AbstractLogOrThro
 	}
 
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
-		String processInstanceId = null;
+		String processInstanceId = String.valueOf(workItem.getProcessInstanceId());
+
+		String reference = String.valueOf(processInstanceId);
 		try {
-			processInstanceId = String.valueOf(workItem.getProcessInstanceId());
-			logger.info("Inicializando las variables del caso [" + processInstanceId + "]");
+			logger.info(Messages.getString("eaijava.messageExecuteInitVariablesCase", reference));
 
 			ProcessContext kcontext = ProcessContextFactory.createProcessContext(ksession, workItem);
 			if (kcontext == null) {
@@ -61,8 +68,9 @@ public class InitializerProcessInstanceWorkItemHandler extends AbstractLogOrThro
 			default:
 				break;
 			}
-			logger.info("Inicializadas las variables del caso [" + processInstanceId + "] correctamente.");
-			manager.completeWorkItem(workItem.getId(), null);
+
+			manager.completeWorkItem(workItem.getId(), results);
+			logger.info(Messages.getString("eaijava.messageExecuteInitVariablesCaseOk", reference));
 		} catch (Exception e) {
 			logger.error("Error al inicializar las variables del caso [" + processInstanceId + "] [" + e.getMessage() + "]");
 			handleException(e);

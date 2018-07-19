@@ -11,8 +11,9 @@ import es.bde.aps.jbs.workitem.test.config.ConfigTestMail;
 import es.bde.aps.jbs.workitem.test.config.ConfigType;
 import es.bde.aps.jbs.workitem.test.config.ConfigurationFactory;
 import es.bde.aps.jbs.workitem.test.config.ConfigurationTestMail;
+import junit.framework.TestCase;
 
-public class TestEAIMailWorkIteHandler {
+public class TestEAIMailWorkItemHandler extends TestCase {
 
 	private ConfigurationTestMail configuration;
 
@@ -49,6 +50,7 @@ public class TestEAIMailWorkIteHandler {
 
 		EAIMailWorkItemHandler workItemHandler = new EAIMailWorkItemHandler();
 		workItemHandler.executeWorkItem(workItem, manager);
+		System.out.println("");
 	}
 
 	// @Test

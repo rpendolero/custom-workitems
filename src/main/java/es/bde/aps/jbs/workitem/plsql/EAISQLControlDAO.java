@@ -56,8 +56,7 @@ public class EAISQLControlDAO {
 	}
 
 	/**
-	 * M�todo que invoca al procedimiento almacenado que se recibe por
-	 * par�metro
+	 * M�todo que invoca al procedimiento almacenado que se recibe por par�metro
 	 * 
 	 * @param reference
 	 * @param procedure
@@ -71,14 +70,14 @@ public class EAISQLControlDAO {
 
 		String sql = generateSql(procedure, fieldsInput, fieldsOuput);
 
-		logger.info(Messages.getString("eaijava.messageExecuteSql",  reference, procedure, fieldsInput.toString(), fieldsOuput.toString() ));
+		logger.info(Messages.getString("eaijava.messageExecuteSql", reference, procedure, fieldsInput.toString(), fieldsOuput.toString()));
 		OracleCallableStatement stmt = null;
 		try {
 			stmt = (OracleCallableStatement) connection.prepareCall(sql);
 			registerParameters(stmt, fieldsInput, fieldsOuput);
 			stmt.execute();
 			Map<String, Object> response = getParametersOut(stmt, fieldsInput, fieldsOuput);
-			logger.info(Messages.getString("eaijava.messageExecuteSqlResponse", reference, procedure, response.toString() ));
+			logger.info(Messages.getString("eaijava.messageExecuteSqlResponse", reference, procedure, response.toString()));
 			return response;
 
 		} catch (SQLException e) {
@@ -246,15 +245,7 @@ public class EAISQLControlDAO {
 			return hParametersOut;
 
 		try {
-			int pos = 0;
-			if (fieldsInput.size() > 0) {
-				for (int i = 0; i < fieldsInput.size(); i++) {
-					IField field = (IField) fieldsInput.get(i);
-					pos++;
-				}
-			}
-			pos++;
-			// int pos = (inputFields == null ? 1 : inputFields.size() + 1);
+			int pos = (fieldsInput == null ? 1 : fieldsInput.size() + 1);
 			for (int i = 0; i < fieldsOuput.size(); i++) {
 				IField field = (IField) fieldsOuput.get(i);
 				String nameParameter = field.getName();

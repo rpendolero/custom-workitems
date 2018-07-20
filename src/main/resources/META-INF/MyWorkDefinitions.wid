@@ -6,14 +6,14 @@ import org.drools.core.process.core.datatype.impl.type.ListDataType;
 [
 
   [
-    "name" : "Log",
+    "name" : "LogTask",
     "parameters" : [
       "Message" : new StringDataType()
     ],
-    "displayName" : "Log",
-    "icon" : "defaultlogicon.gif"
+    "displayName" : "Log Task",
+    "description" : "Tarea de traceo de flujo",
+    "icon" : "logger.png"
   ],
-
 
 [
     "name" : "ProcedureTask",
@@ -25,20 +25,56 @@ import org.drools.core.process.core.datatype.impl.type.ListDataType;
     "results" : [
         "Result" : new ObjectDataType(),
     ],
-    "displayName" : "ProcedureTask",
-    "icon" : "defaultservicenodeicon.png"
-  ]
+    "displayName" : "Call PL/SQL Task",
+    "description" : "Tarea de llamada a PL/SQL",
+    "icon" : "database.png"
+  ],
 
 [
-    "name" : "TestWebServiceTask",
+    "name" : "EMailTask",
     "parameters" : [
-        "Procedure" : new StringDataType(),
-        
+        "From" : new StringDataType(),
+        "To" : new StringDataType(),
+        "To Group" : new StringDataType(),
+        "Cc" : new StringDataType(),
+        "Cco" : new StringDataType(),
+        "Subject" : new StringDataType(),
+        "Body" : new StringDataType()
     ],
     "results" : [
         "Result" : new ObjectDataType(),
     ],
-    "displayName" : "TestWebServiceTask",
-    "icon" : "defaultservicenodeicon.png"
+    "displayName" : "E-Mail  Task",
+    "description" : "Tarea de envio de correo",
+    "icon" : "mail.png"
+  ],
+  
+  [
+    "name" : "StarterProcessInstanceTask",
+    "parameters" : [
+        "Procedure" : new StringDataType(),
+        "Input Fields" : new ListDataType()
+    ],
+    "results" : [
+        "Result" : new ObjectDataType(),
+    ],
+    "displayName" : "Start Process Task",
+    "description" : "Tarea de arranque de proceso",
+    "icon" : "start.png"
+  ],
+  
+    [
+    "name" : "LauncherEventTask",
+    "parameters" : [
+        "Procedure" : new StringDataType(),
+        "Process Instance" : new IntegerDataType(),
+        "Input Fields" : new ListDataType()
+    ],
+    "results" : [
+        "Result" : new ObjectDataType(),
+    ],
+    "displayName" : "Launch Event Task",
+    "description" : "Tarea de envio de evento a una instancia de proceso",
+    "icon" : "send_event.png"
   ]
 ]

@@ -22,8 +22,9 @@ import es.bde.aps.jbs.workitem.test.config.ConfigType;
 import es.bde.aps.jbs.workitem.test.config.ConfigurationFactory;
 import es.bde.aps.jbs.workitem.test.config.ConfigurationTestPlSql;
 import es.bde.aps.jbs.workitem.util.ConvertUtil;
+import junit.framework.TestCase;
 
-public class TestEAISQLProcedureWorkItemHandler {
+public class TestEAISQLProcedureWorkItemHandler extends TestCase {
 
 	private ConfigurationTestPlSql configuration;
 	private KieSession ksession;

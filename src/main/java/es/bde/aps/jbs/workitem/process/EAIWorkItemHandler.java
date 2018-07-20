@@ -25,7 +25,7 @@ public abstract class EAIWorkItemHandler extends AbstractLogOrThrowWorkItemHandl
 	protected KieSession ksession;
 	protected Map<String, Object> results = new HashMap<String, Object>();
 
-	public EAIWorkItemHandler(KieSession ksession2) {
+	public EAIWorkItemHandler(KieSession ksession) {
 		this.ksession = ksession;
 	}
 
@@ -65,10 +65,24 @@ public abstract class EAIWorkItemHandler extends AbstractLogOrThrowWorkItemHandl
 		return parameters;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.kie.api.runtime.process.WorkItemHandler#executeWorkItem(org.kie.api.
+	 * runtime.process.WorkItem, org.kie.api.runtime.process.WorkItemManager)
+	 */
 	public abstract void executeWorkItem(WorkItem workItem, WorkItemManager manager);
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.kie.api.runtime.process.WorkItemHandler#abortWorkItem(org.kie.api.runtime
+	 * .process.WorkItem, org.kie.api.runtime.process.WorkItemManager)
+	 */
 	public void abortWorkItem(WorkItem workItem, WorkItemManager manager) {
-
+		long id = workItem.getId();
+		manager.abortWorkItem(id);
 	}
 
 }

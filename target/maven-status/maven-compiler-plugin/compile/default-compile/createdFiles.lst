@@ -12,13 +12,16 @@ es/bde/aps/jbs/workitem/mail/Recipients.class
 es/bde/aps/jbs/workitem/mail/MailSender$Authenticator.class
 es/bde/aps/jbs/workitem/mail/Message.class
 es/bde/aps/jbs/workitem/pool/ConnectionPoolFactory.class
+es/bde/aps/jbs/workitem/process/EAIWorkItemHandler.class
 es/bde/aps/jbs/workitem/mail/SessionFactory.class
 es/bde/aps/jbs/workitem/util/ProcessContextFactory.class
 es/bde/aps/jbs/workitem/util/Properties.class
 es/bde/aps/jbs/workitem/interfaces/IField.class
+es/bde/aps/jbs/workitem/init/TestParametersWorkItemHandler.class
 es/bde/aps/jbs/workitem/mail/Email.class
 es/bde/aps/jbs/workitem/Messages.class
 es/bde/aps/jbs/workitem/exception/JBSException.class
+es/bde/aps/jbs/workitem/process/EAILauncherEventWorkItemHandler.class
 es/bde/aps/jbs/workitem/mail/Recipient.class
 es/bde/aps/jbs/workitem/plsql/EAISQLProcedureWorkItemHandler.class
 es/bde/aps/jbs/workitem/pool/ConnectionFactory.class

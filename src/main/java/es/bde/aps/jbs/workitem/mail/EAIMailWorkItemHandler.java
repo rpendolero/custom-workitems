@@ -177,7 +177,7 @@ public class EAIMailWorkItemHandler implements WorkItemHandler {
 				try {
 					pool.returnObject(conex);
 				} catch (Exception e1) {
-					// TODO Bloque catch generado automáticamente
+					// TODO Bloque catch generado automï¿½ticamente
 					e1.printStackTrace();
 				}
 			}

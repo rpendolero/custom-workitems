@@ -21,7 +21,7 @@ public abstract class ConfigurationAbstract implements IConfiguration {
 	protected void load(String fileName) throws Exception {
 		// TODO Ap�ndice de m�todo generado autom�ticamente
 
-		InputStream input = ConfigurationTestPlSql.class.getResourceAsStream(fileName);
+		InputStream input = ConfigurationTestPlSql.class.getResourceAsStream("/config" + fileName);
 		if (input == null)
 			throw new Exception("No se encuentra el fichero [" + fileName + "] en el classpath");
 

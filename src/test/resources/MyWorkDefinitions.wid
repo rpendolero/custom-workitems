@@ -4,7 +4,17 @@ import org.drools.core.process.core.datatype.impl.type.ListDataType;
 
 
 [
-
+[
+    "name" : "TestParametersTask",
+    "parameters" : [
+       ],
+    "results" : [
+        "Result" : new ObjectDataType(),
+    ],
+     "defaultHandler" : "es.bde.aps.jbs.workitem.init.TestParametersWorkItemHandler",
+    "displayName" : "Test  Task",
+    "icon" : "mail.png"
+  ],
   [
     "name" : "LogTask",
     "parameters" : [
@@ -30,24 +40,6 @@ import org.drools.core.process.core.datatype.impl.type.ListDataType;
     "icon" : "database.png"
   ],
 
-[
-    "name" : "EMailTask",
-    "parameters" : [
-        "From" : new StringDataType(),
-        "To" : new StringDataType(),
-        "To Group" : new StringDataType(),
-        "Cc" : new StringDataType(),
-        "Cco" : new StringDataType(),
-        "Subject" : new StringDataType(),
-        "Body" : new StringDataType()
-    ],
-    "results" : [
-        "Result" : new ObjectDataType(),
-    ],
-    "displayName" : "E-Mail  Task",
-    "description" : "Tarea de envio de correo",
-    "icon" : "mail.png"
-  ],
   
   [
     "name" : "StarterProcessInstanceTask",
@@ -76,5 +68,12 @@ import org.drools.core.process.core.datatype.impl.type.ListDataType;
     "displayName" : "Launch Event Task",
     "description" : "Tarea de envio de evento a una instancia de proceso",
     "icon" : "send_event.png"
+  ],
+  
+   [
+    "name" : "InitializerProcessInstanceTask",
+     "parameters" : [ ],
+     "displayName" : "Initializer Processs Task"
+
   ]
 ]

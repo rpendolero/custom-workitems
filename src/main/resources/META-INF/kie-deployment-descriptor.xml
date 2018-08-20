@@ -12,6 +12,29 @@
 	<task-event-listeners />
 	<globals />
 	<work-item-handlers>
+			<work-item-handler>
+			<resolver>mvel</resolver>
+			<identifier>new
+				es.bde.aps.jbs.workitem.init.TestParametersWorkItemHandler(ksession)</identifier>
+			<parameters />
+			<name>TestParametersTask</name>
+		</work-item-handler>
+		<work-item-handler>
+			<resolver>mvel</resolver>
+			<identifier>new
+				es.bde.aps.jbs.workitem.init.InitializerProcessInstanceWorkItemHandler(ksession)</identifier>
+			<parameters />
+			<name>InitializerProcessInstanceTask</name>
+		</work-item-handler>
+		<work-item-handler>
+			<resolver>mvel</resolver>
+			<identifier>new
+				org.jbpm.process.workitem.bpmn2.ServiceTaskHandler(ksession,
+				classLoader)</identifier>
+			<parameters />
+			<name>Service Task</name>
+		</work-item-handler>
+		
 		<work-item-handler>
 			<resolver>mvel</resolver>
 			<identifier>new
@@ -22,7 +45,35 @@
 		<work-item-handler>
 			<resolver>mvel</resolver>
 			<identifier>new
-				es.bde.aps.jbs.eaijava.plsql.EAISQLProcedureWorkItemHandler()</identifier>
+				org.jbpm.process.workitem.webservice.WebServiceWorkItemHandler(ksession,
+				classLoader)</identifier>
+			<parameters />
+			<name>WebService</name>
+		</work-item-handler>
+		<work-item-handler>
+			<resolver>mvel</resolver>
+			<identifier>new org.jbpm.process.workitem.rest.RESTWorkItemHandler()</identifier>
+			<parameters />
+			<name>Rest</name>
+		</work-item-handler>
+		<work-item-handler>
+			<resolver>mvel</resolver>
+			<identifier>new
+				es.bde.aps.jbs.workitem.process.EAIStarterProcessInstanceWorkItemHandler(ksession)</identifier>
+			<parameters ></parameters>
+			<name>StarterProcessInstanceTask</name>
+		</work-item-handler>
+		<work-item-handler>
+			<resolver>mvel</resolver>
+			<identifier>new
+				es.bde.aps.jbs.workitem.process.EAILauncherEventWorkItemHandler(ksession)</identifier>
+			<parameters />
+			<name>LauncherEventTask</name>
+		</work-item-handler>
+		<work-item-handler>
+			<resolver>mvel</resolver>
+			<identifier>new
+				es.bde.aps.jbs.workitem.plsql.EAISQLProcedureWorkItemHandler(ksession)</identifier>
 			<parameters />
 			<name>ProcedureTask</name>
 		</work-item-handler>
@@ -32,24 +83,9 @@
 			<parameters />
 			<name>EMailTask</name>
 		</work-item-handler>
-		<work-item-handler>
-			<resolver>mvel</resolver>
-			<identifier>new
-				es.bde.aps.jbs.workitem.process.EAIStarterProcessInstanceWorkItemHandler()</identifier>
-			<parameters />
-			<name>StarterProcessInstanceTask</name>
-		</work-item-handler>
-		<work-item-handler>
-			<resolver>mvel</resolver>
-			<identifier>new
-				es.bde.aps.jbs.workitem.process.EAILauncherEventWorkItemHandler()</identifier>
-			<parameters />
-			<name>LauncherEventTask</name>
-		</work-item-handler>
 	</work-item-handlers>
 	<environment-entries />
 	<configurations />
 	<required-roles />
 	<remoteable-classes />
-	<limit-serialization-classes>true</limit-serialization-classes>
 </deployment-descriptor>

@@ -137,7 +137,7 @@ public class TestEAISQLProcedureWorkItemHandler extends TestCase {
 	public void setUp() {
 
 		String directory = System.getProperty("user.dir");
-		System.setProperty(EAIConstants.PROP_JBOSS_CONFIG_DIR, directory + "/src/test/resources");
+		System.setProperty(EAIConstants.PROP_JBOSS_CONFIG_DIR, directory + "/src/test/resources/config");
 		try {
 			configuration = (ConfigurationTestPlSql) ConfigurationFactory.getConfiguration(ConfigType.CONFIG_PL_SQL);
 			ksession = createKieSession();

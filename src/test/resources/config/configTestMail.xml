@@ -3,7 +3,7 @@
 	<tests>
 		<test name="testExecuteMailCorrect">
 			<parameters>
-				<parameter name="From" value="user@correo.interno"/>
+				<parameter name="From" value="pendolero@gmail.com"/>
 				<parameter name="To" value="pendolero@gmail.com"/>
 				<parameter name="Subject" value="testExecuteMailCorrect"/>
 				<parameter name="Body" value="Este es un mensaje de prueba del test testExecuteMailCorrect"/>

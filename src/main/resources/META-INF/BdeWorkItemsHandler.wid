@@ -1,0 +1,100 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
+import org.drools.core.process.core.datatype.impl.type.ListDataType;
+[
+	[
+	    "name" : "TestParametersTask",
+	    "parameters" : [
+	       ],
+	    "results" : [
+	        "Result" : new ObjectDataType(),
+	    ],
+	     "defaultHandler" : "es.bde.aps.jbs.workitem.init.TestParametersWorkItemHandler",
+	    "displayName" : "Test  Task",
+	    "icon" : "settings.png"
+	  ],
+	[
+	    "name" : "ProcedureTask",
+	    "parameters" : [
+	        "Procedure" : new StringDataType(),
+	        "Input Fields" : new ListDataType(),
+	        "Output Fields" : new ListDataType()
+	    ],
+	    "results" : [
+	        "Result" : new ObjectDataType(),
+	    ],
+	    "category" : "Bde Work Items",
+	    "displayName" : "Call PL/SQL Task",
+	    "description" : "Tarea de llamada a PL/SQL",
+	    "icon" : "database.png"
+	  ],
+  
+	  [
+	    "name" : "StarterProcessInstanceTask",
+	    "parameters" : [
+	        "Procedure" : new StringDataType(),
+	        "Input Fields" : new ListDataType()
+	    ],
+	    "results" : [
+	        "Result" : new ObjectDataType(),
+	    ],
+	    "category" : "Bde Work Items",
+	    "displayName" : "Start Process Task",
+	    "description" : "Tarea de arranque de proceso",
+	    "icon" : "start.png"
+	  ],
+  
+	[
+	    "name" : "LauncherEventTask",
+	    "parameters" : [
+	        "Procedure" : new StringDataType(),
+	        "Process Instance" : new IntegerDataType(),
+	        "Input Fields" : new ListDataType()
+	    ],
+	    "results" : [
+	        "Result" : new ObjectDataType(),
+	    ],
+	    "category" : "Bde Work Items",
+	    "displayName" : "Launch Event Task",
+	    "description" : "Tarea de envio de evento a una instancia de proceso",
+	    "icon" : "send_event.png"
+	  ],
+	  
+	[
+	    "name" : "EMailTask",
+	    "parameters" : [
+	        "From" : new StringDataType(),
+	        "To" : new StringDataType(),
+	        "To Group" : new StringDataType(),
+	        "Cc" : new StringDataType(),
+	        "Cco" : new StringDataType(),
+	        "Subject" : new StringDataType(),
+	        "Body" : new StringDataType()
+	    ],
+	    "results" : [
+	        "Result" : new ObjectDataType(),
+	    ],
+	    "category" : "Bde Work Items",
+	    "displayName" : "E-Mail  Task",
+	    "description" : "Tarea de envio de correo",
+	    "icon" : "mail.png"
+	  ],
+	   [
+	    "name" : "LogTask",
+	    "parameters" : [
+	      "Message" : new StringDataType()
+	    ],
+	    "category" : "Bde Work Items",
+	    "displayName" : "Log Task",
+	    "description" : "Tarea de traceo de flujo",
+	    "icon" : "logger.png"
+	  ],
+	  
+	   [
+		  "name" : "InitializerProcessInstanceTask",
+	     "parameters" : [ ],
+	     "category" : "Bde Work Items",
+	     "displayName" : "Initializer Processs Task",
+	     "icon" : "settings.png"	
+	  ]
+  ]

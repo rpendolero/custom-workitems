@@ -9,9 +9,12 @@ import org.junit.Test;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
+import org.kie.api.runtime.process.ProcessInstance;
+import org.kie.api.runtime.process.WorkItemManager;
 import org.kie.api.runtime.process.WorkflowProcessInstance;
 
 import es.bde.aps.jbs.workitem.EAIConstants;
+import es.bde.aps.jbs.workitem.init.LogVariablesWorkItemHandler;
 import es.bde.aps.jbs.workitem.init.TestParametersWorkItemHandler;
 
 public class ServiceTaskTest extends JbpmJUnitBaseTestCase {
@@ -33,7 +36,9 @@ public class ServiceTaskTest extends JbpmJUnitBaseTestCase {
 			assertNotNull(engine);
 
 			ksession = engine.getKieSession();
-			ksession.getWorkItemManager().registerWorkItemHandler("TestParametersTask", new TestParametersWorkItemHandler(ksession));
+			WorkItemManager workItemManager = ksession.getWorkItemManager();
+			workItemManager.registerWorkItemHandler("TestParametersTask", new TestParametersWorkItemHandler(ksession));
+			workItemManager.registerWorkItemHandler("LogVariablesTask", new LogVariablesWorkItemHandler(ksession));
 		} catch (Exception e) {
 			String message = "Error al cargar la configuracion [" + e.getMessage() + "]";
 			Assert.assertNotNull(message, null);
@@ -47,6 +52,8 @@ public class ServiceTaskTest extends JbpmJUnitBaseTestCase {
 		params.put("PARAMETER2", 2222);
 
 		WorkflowProcessInstance processInstance = (WorkflowProcessInstance) ksession.startProcess("TSTTEST", params);
+		System.out.println(processInstance.getState()+" "+ProcessInstance.STATE_ACTIVE);
+		//assertThat(processInstance.getState()).isEqualTo(ProcessInstance.STATE_ACTIVE);
 	}
 
 }

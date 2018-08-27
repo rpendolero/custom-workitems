@@ -34,13 +34,12 @@
 			<parameters />
 			<name>Service Task</name>
 		</work-item-handler>
-		
 		<work-item-handler>
 			<resolver>mvel</resolver>
 			<identifier>new
 				org.jbpm.process.instance.impl.demo.SystemOutWorkItemHandler()</identifier>
 			<parameters />
-			<name>LogTask</name>
+			<name>LogMessageTask</name>
 		</work-item-handler>
 		<work-item-handler>
 			<resolver>mvel</resolver>
@@ -55,6 +54,13 @@
 			<identifier>new org.jbpm.process.workitem.rest.RESTWorkItemHandler()</identifier>
 			<parameters />
 			<name>Rest</name>
+		</work-item-handler>
+		<work-item-handler>
+			<resolver>mvel</resolver>
+			<identifier>new
+				es.bde.aps.jbs.workitem.init.LogVariablesWorkItemHandler(ksession)</identifier>
+			<parameters />
+			<name>LogVariablesTask</name>
 		</work-item-handler>
 		<work-item-handler>
 			<resolver>mvel</resolver>

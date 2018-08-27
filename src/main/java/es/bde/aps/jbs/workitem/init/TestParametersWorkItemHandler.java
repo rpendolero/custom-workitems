@@ -19,12 +19,15 @@ import es.bde.aps.jbs.workitem.util.ProcessContextFactory;
 public class TestParametersWorkItemHandler implements WorkItemHandler {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private KieSession ksession;
+	private ProcessContext kcontext;
 
 	public TestParametersWorkItemHandler(KieSession ksession) {
 		this.ksession = ksession;
 	}
 
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
+		System.out.println("Executing ["+this.getClass().getSimpleName()+"] ...");
+		kcontext = ProcessContextFactory.createProcessContext(ksession, workItem);
 		Map<String, Object> parameters = workItem.getParameters();
 		Set<Entry<String, Object>> entrySet = parameters.entrySet();
 		for (Entry<String, Object> entry : entrySet) {
@@ -45,6 +48,7 @@ public class TestParametersWorkItemHandler implements WorkItemHandler {
 
 		try {
 			printProcessVariables(workItem);
+			results.put("RESULT", "valor1");
 		} catch (JBSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,7 +56,7 @@ public class TestParametersWorkItemHandler implements WorkItemHandler {
 	}
 
 	private void printProcessVariables(WorkItem workItem) throws JBSException {
-		ProcessContext kcontext = ProcessContextFactory.createProcessContext(ksession, workItem);
+
 		if (kcontext == null) {
 			throw new JBSException("No se pudo crear el kie context");
 		}

@@ -49,6 +49,7 @@ import org.drools.core.process.core.datatype.impl.type.ListDataType;
 	    "parameters" : [
 	        "Procedure" : new StringDataType(),
 	        "Process Instance" : new IntegerDataType(),
+	        "Event Name" : new StringDataType(),
 	        "Input Fields" : new ListDataType()
 	    ],
 	    "results" : [
@@ -80,13 +81,23 @@ import org.drools.core.process.core.datatype.impl.type.ListDataType;
 	    "icon" : "mail.png"
 	  ],
 	   [
-	    "name" : "LogTask",
+	    "name" : "LogMessageTask",
 	    "parameters" : [
 	      "Message" : new StringDataType()
 	    ],
 	    "category" : "Bde Work Items",
-	    "displayName" : "Log Task",
+	    "displayName" : "Log Message Task",
 	    "description" : "Tarea de traceo de flujo",
+	    "icon" : "logger.png"
+	  ],
+	  
+	  [
+	    "name" : "LogVariablesTask",
+	    "parameters" : [
+	    ],
+	    "category" : "Bde Work Items",
+	    "displayName" : "Log Variables Task",
+	    "description" : "Tarea de traceo de variables",
 	    "icon" : "logger.png"
 	  ],
 	  

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>eaijava</name>
+	<name>custom-workitems</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -35,6 +35,11 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>org.hibernate.eclipse.console.hibernateBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.fusesource.ide.project.RiderProjectNature</nature>
@@ -42,5 +47,6 @@
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 		<nature>org.eclipse.bpmn2.modeler.core.bpmn2Nature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+		<nature>org.hibernate.eclipse.console.hibernateNature</nature>
 	</natures>
 </projectDescription>
